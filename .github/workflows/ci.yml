@@ -1,0 +1,65 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: velmora_test
+          POSTGRES_PASSWORD: test_pass
+          POSTGRES_DB: velmora_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+        working-directory: ./backend
+      - run: npx prisma migrate deploy
+        working-directory: ./backend
+        env:
+          DATABASE_URL: postgresql://velmora_test:test_pass@localhost:5432/velmora_test
+      - run: npm test
+        working-directory: ./backend
+
+  test-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+        working-directory: ./frontend
+      - run: npm test -- --watch=false --browsers=ChromeHeadless
+        working-directory: ./frontend
+
+  deploy:
+    needs: [test-backend, test-frontend]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy Backend
+        run: npx railway up --service velmora-backend
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+      - name: Deploy Frontend
+        run: npx railway up --service velmora-frontend
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}

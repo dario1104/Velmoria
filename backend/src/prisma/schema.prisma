@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  name      String?  @db.VarChar(100)
+  avatarUrl String?  @map("avatar_url")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  trips     Trip[]
+  @@map("users")
+}
+
+model Trip {
+  id          String    @id @default(uuid())
+  userId      String    @map("user_id")
+  title       String    @db.VarChar(200)
+  description String?   @db.Text
+  startDate   DateTime  @map("start_date")
+  endDate     DateTime? @map("end_date")
+  isActive    Boolean   @default(true) @map("is_active")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  points      GpsPoint[]
+  markers     Marker[]
+  @@map("trips")
+}
+
+model GpsPoint {
+  id        String   @id @default(uuid())
+  tripId    String   @map("trip_id")
+  latitude  Float
+  longitude Float
+  timestamp DateTime
+  speed     Float?
+  accuracy  Float?
+  altitude  Float?
+  trip      Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  @@index([tripId])
+  @@index([tripId, timestamp])
+  @@map("gps_points")
+}
+
+model Marker {
+  id        String   @id @default(uuid())
+  tripId    String   @map("trip_id")
+  latitude  Float
+  longitude Float
+  type      String   @db.VarChar(20)
+  content   String?  @db.Text
+  mood      String?  @db.VarChar(50)
+  createdAt DateTime @default(now()) @map("created_at")
+  trip      Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  media     Media[]
+  @@index([tripId])
+  @@index([type])
+  @@map("markers")
+}
+
+model Media {
+  id        String   @id @default(uuid())
+  markerId  String   @map("marker_id")
+  fileUrl   String   @map("file_url")
+  fileType  String   @db.VarChar(50) @map("file_type")
+  fileSize  Int?     @map("file_size")
+  metadata  Json?    @default("{}") @db.JsonB
+  createdAt DateTime @default(now()) @map("created_at")
+  marker    Marker   @relation(fields: [markerId], references: [id], onDelete: Cascade)
+  @@index([markerId])
+  @@map("media")
+}
