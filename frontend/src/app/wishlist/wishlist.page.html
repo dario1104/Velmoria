@@ -1,0 +1,52 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Wishlist</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="showForm = !showForm">
+        <ion-icon slot="icon-only" [name]="showForm ? 'close-outline' : 'add-outline'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="showForm">
+    <ion-item>
+      <ion-label position="stacked">Title</ion-label>
+      <ion-input [(ngModel)]="title" placeholder="Trip title"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Destination</ion-label>
+      <ion-input [(ngModel)]="destination" placeholder="Where?"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Notes</ion-label>
+      <ion-textarea [(ngModel)]="notes" rows="3" placeholder="Any notes..."></ion-textarea>
+    </ion-item>
+    <div class="ion-padding">
+      <ion-button expand="block" (click)="add()" [disabled]="!title.trim()">
+        Add to Wishlist
+      </ion-button>
+    </div>
+  </ion-list>
+
+  <ion-list *ngIf="items.length > 0; else empty">
+    <ion-item *ngFor="let item of items; trackBy: trackByItemId">
+      <ion-checkbox slot="start" [checked]="item.completed" (ionChange)="toggle(item)"></ion-checkbox>
+      <ion-label [class.completed]="item.completed">
+        <h2>{{ item.title }}</h2>
+        <p *ngIf="item.destination">{{ item.destination }}</p>
+        <p *ngIf="item.notes">{{ item.notes }}</p>
+      </ion-label>
+      <ion-button slot="end" color="danger" fill="clear" (click)="remove(item.id)">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #empty>
+    <ion-text color="medium" class="ion-padding">
+      <p>Your wishlist is empty.</p>
+    </ion-text>
+  </ng-template>
+</ion-content>

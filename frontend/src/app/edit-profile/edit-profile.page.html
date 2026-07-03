@@ -1,0 +1,28 @@
+<ion-content [scrollY]="false">
+  <div id="wrapper">
+    <div id="brand">
+      <img id="logo" src="assets/logo.png" alt="Velmoria" />
+      <h1>Modifica profilo</h1>
+    </div>
+
+    <div id="form">
+      <ion-item>
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-input placeholder="Nome" [(ngModel)]="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-input placeholder="Email" type="email" [value]="email" readonly></ion-input>
+      </ion-item>
+
+      <ion-note color="danger" *ngIf="error" class="ion-padding-start">{{ error }}</ion-note>
+
+      <ion-icon *ngIf="success" name="checkmark-circle-outline" color="success" class="result-icon"></ion-icon>
+      <p *ngIf="success">Profilo aggiornato</p>
+
+      <ion-button expand="block" (click)="save()">
+        Salva
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TripsService, Trip } from '../services/trips.service';
 import { GpsService, GpsPoint } from '../services/gps.service';
 import { MarkersService, Marker } from '../services/markers.service';
+import { GeoLocationService } from '../services/geo-location.service';
 
 @Component({
   selector: 'app-trip-detail',
@@ -10,10 +11,11 @@ import { MarkersService, Marker } from '../services/markers.service';
   styleUrls: ['trip-detail.page.scss'],
   standalone: false,
 })
-export class TripDetailPage implements OnInit {
+export class TripDetailPage implements OnInit, OnDestroy {
   trip?: Trip;
   markers: Marker[] = [];
   stats: any = null;
+  tracking = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,6 +23,7 @@ export class TripDetailPage implements OnInit {
     private tripsService: TripsService,
     private gpsService: GpsService,
     private markersService: MarkersService,
+    private geo: GeoLocationService,
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +49,21 @@ export class TripDetailPage implements OnInit {
 
   edit(): void {
     this.router.navigate(['/trip-form', this.trip!.id]);
+  }
+
+  ngOnDestroy(): void {
+    this.geo.stopTracking();
+  }
+
+  toggleTracking(): void {
+    if (!this.trip) return;
+    if (this.tracking) {
+      this.geo.stopTracking();
+      this.tracking = false;
+    } else {
+      this.geo.startTracking(this.trip.id);
+      this.tracking = true;
+    }
   }
 
   formatTime(seconds: number): string {

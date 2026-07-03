@@ -45,6 +45,26 @@ export class AuthService {
     return !!this.getAccessToken();
   }
 
+  verifyEmail(token: string): Observable<any> {
+    return this.http.get(`${this.api}/auth/verify-email/${token}`);
+  }
+
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post(`${this.api}/auth/forgot-password`, { email });
+  }
+
+  resetPassword(token: string, password: string): Observable<any> {
+    return this.http.post(`${this.api}/auth/reset-password`, { token, password });
+  }
+
+  changePassword(currentPassword: string, newPassword: string): Observable<any> {
+    return this.http.post(`${this.api}/auth/change-password`, { currentPassword, newPassword });
+  }
+
+  updateProfile(data: { name?: string }): Observable<any> {
+    return this.http.patch(`${this.api}/auth/profile`, data);
+  }
+
   logout(): void {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');

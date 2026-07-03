@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Badges</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let a of achievements">
+        <ion-card>
+          <ion-card-content class="ion-text-center">
+            <ion-icon [name]="a.icon" size="large"></ion-icon>
+            <h2>{{ a.title }}</h2>
+            <p>{{ a.earnedAt | date }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

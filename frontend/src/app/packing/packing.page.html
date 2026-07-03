@@ -1,0 +1,67 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Packing List</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openAdd()">
+        <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="!loading; else loadingSpinner">
+    <ion-item *ngIf="items.length === 0">
+      <ion-label class="ion-text-center ion-padding">
+        <p>No packing items yet</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item *ngFor="let item of items; trackBy: trackById">
+      <ion-checkbox slot="start" [checked]="item.packed" (ionChange)="togglePacked(item)"></ion-checkbox>
+      <ion-label>
+        <h2 [class.strikethrough]="item.packed">{{ item.item }}</h2>
+        <p *ngIf="item.quantity || item.category">
+          <span *ngIf="item.quantity">Qty: {{ item.quantity }}</span>
+          <span *ngIf="item.category"> · {{ item.category }}</span>
+        </p>
+      </ion-label>
+      <ion-button slot="end" color="danger" fill="clear" (click)="deleteItem(item.id)">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #loadingSpinner>
+    <div class="ion-text-center ion-padding">
+      <ion-spinner></ion-spinner>
+    </div>
+  </ng-template>
+
+  <ion-card *ngIf="showForm">
+    <ion-card-header>
+      <ion-card-title>Add Item</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Item</ion-label>
+        <ion-input [(ngModel)]="formItem"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Quantity</ion-label>
+        <ion-input type="number" [(ngModel)]="formQuantity"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Category</ion-label>
+        <ion-input [(ngModel)]="formCategory"></ion-input>
+      </ion-item>
+      <div class="ion-padding-top ion-text-end">
+        <ion-button fill="outline" (click)="cancelForm()">Cancel</ion-button>
+        <ion-button (click)="saveItem()">Save</ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

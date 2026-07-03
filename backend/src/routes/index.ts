@@ -20,6 +20,7 @@ import achievementsRoutes from './achievements.routes';
 import searchRoutes from './search.routes';
 import adminRoutes from './admin.routes';
 import replayRoutes from './replay.routes';
+import inviteRoutes from './invite.routes';
 
 const router = Router();
 
@@ -44,5 +45,6 @@ router.use('/achievements', achievementsRoutes);
 router.use('/search', searchRoutes);
 router.use('/admin', adminRoutes);
 router.use('/', replayRoutes);
+router.use('/', inviteRoutes);
 
 export default router;

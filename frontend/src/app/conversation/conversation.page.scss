@@ -1,0 +1,26 @@
+ion-item {
+  --background: transparent;
+}
+
+.message-bubble {
+  padding: 8px 12px;
+  border-radius: 12px;
+  max-width: 80%;
+}
+
+.sent .message-bubble {
+  background: var(--ion-color-primary);
+  color: #fff;
+  margin-left: auto;
+}
+
+.received .message-bubble {
+  background: var(--ion-color-light);
+  margin-right: auto;
+}
+
+.time {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin-top: 4px;
+}

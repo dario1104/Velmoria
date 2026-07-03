@@ -29,4 +29,8 @@ router.get('/:id/members', tripsController.getMembers);
 router.delete('/:id/members/:memberId', tripsController.removeMember);
 router.patch('/:id/members/:memberId', updateMemberRoleValidator, tripsController.updateMemberRole);
 
+router.post('/:id/invite', tripsController.inviteCollaborator);
+router.get('/:id/invites', tripsController.getInvites);
+router.patch('/:id/visibility', tripsController.setVisibility);
+
 export default router;

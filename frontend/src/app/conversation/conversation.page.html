@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Conversation</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #content>
+  <ion-list>
+    <ion-item *ngFor="let msg of messages; trackBy: trackByMessage" [ngClass]="{'sent': msg.senderId === currentUserId, 'received': msg.senderId !== currentUserId}">
+      <ion-label class="message-bubble">
+        <p>{{ msg.content }}</p>
+        <p class="time">{{ msg.createdAt | date:'shortTime' }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-item *ngIf="loading">
+    <ion-label>Loading messages...</ion-label>
+  </ion-item>
+
+  <ion-item *ngIf="messages.length === 0 && !loading && !error">
+    <ion-label>No messages yet</ion-label>
+  </ion-item>
+
+  <ion-item *ngIf="error">
+    <ion-label color="danger">{{ error }}</ion-label>
+  </ion-item>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-input
+        [(ngModel)]="newMessage"
+        placeholder="Type a message"
+        (keyup.enter)="send()"
+      ></ion-input>
+      <ion-button slot="end" (click)="send()" [disabled]="!newMessage.trim()">
+        Send
+      </ion-button>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

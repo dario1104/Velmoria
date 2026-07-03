@@ -1,0 +1,21 @@
+<ion-content [scrollY]="false">
+  <div id="wrapper">
+    <div id="brand">
+      <img id="logo" src="assets/logo.png" alt="Velmoria" />
+      <h1>Verifica email</h1>
+    </div>
+
+    <div id="content" class="ion-text-center">
+      <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+
+      <ion-icon *ngIf="success" name="checkmark-circle-outline" color="success" class="result-icon"></ion-icon>
+      <p *ngIf="success">Email verificata con successo</p>
+
+      <ion-note color="danger" *ngIf="error">{{ error }}</ion-note>
+
+      <ion-button expand="block" routerLink="/login" *ngIf="!loading">
+        Vai al login
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

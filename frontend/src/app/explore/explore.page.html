@@ -1,0 +1,81 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Explore</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar
+    [(ngModel)]="query"
+    (ionInput)="onSearch()"
+    placeholder="Search places..."
+  ></ion-searchbar>
+
+  <ng-container *ngIf="searchResults !== null; else browseView">
+    <ion-list *ngIf="searchResults.length > 0; else noResults">
+      <ion-item
+        *ngFor="let poi of searchResults; trackBy: trackByPoiId"
+        [routerLink]="['/place-detail', poi.id]"
+      >
+        <ion-label>
+          <h2>{{ poi.name }}</h2>
+          <p *ngIf="poi.category">{{ poi.category }}</p>
+        </ion-label>
+        <ion-badge slot="end" *ngIf="poi.rating">{{ poi.rating }}</ion-badge>
+      </ion-item>
+    </ion-list>
+    <ng-template #noResults>
+      <ion-text color="medium" class="ion-padding">
+        <p>No results found for "{{ query }}"</p>
+      </ion-text>
+    </ng-template>
+  </ng-container>
+
+  <ng-template #browseView>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Featured POIs</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list *ngIf="featuredPois.length > 0">
+          <ion-item
+            *ngFor="let poi of featuredPois; trackBy: trackByPoiId"
+            [routerLink]="['/place-detail', poi.id]"
+          >
+            <ion-label>
+              <h2>{{ poi.name }}</h2>
+              <p>{{ poi.category }}</p>
+            </ion-label>
+            <ion-badge slot="end" *ngIf="poi.rating">{{ poi.rating }}</ion-badge>
+          </ion-item>
+        </ion-list>
+        <ion-text color="medium" *ngIf="featuredPois.length === 0">
+          <p>No featured places available.</p>
+        </ion-text>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Trending Now</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list *ngIf="trendingPois.length > 0">
+          <ion-item
+            *ngFor="let poi of trendingPois; trackBy: trackByPoiId"
+            [routerLink]="['/place-detail', poi.id]"
+          >
+            <ion-label>
+              <h2>{{ poi.name }}</h2>
+              <p>{{ poi.category }}</p>
+            </ion-label>
+            <ion-badge slot="end" *ngIf="poi.rating">{{ poi.rating }}</ion-badge>
+          </ion-item>
+        </ion-list>
+        <ion-text color="medium" *ngIf="trendingPois.length === 0">
+          <p>No trending places right now.</p>
+        </ion-text>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+</ion-content>

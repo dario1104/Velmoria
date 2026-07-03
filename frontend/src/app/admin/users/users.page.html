@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Users</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let user of users">
+      <ion-label>
+        <h2>{{ user.name || user.email }}</h2>
+        <p>{{ user.email }}</p>
+      </ion-label>
+      <ion-select [value]="user.role" (ionChange)="changeRole(user.id, $event.detail.value)" slot="end">
+        <ion-select-option value="user">User</ion-select-option>
+        <ion-select-option value="moderator">Moderator</ion-select-option>
+        <ion-select-option value="admin">Admin</ion-select-option>
+      </ion-select>
+      <ion-button fill="clear" color="danger" (click)="deleteUser(user.id)" slot="end">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

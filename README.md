@@ -12,7 +12,7 @@
 | Database | PostgreSQL + Prisma ORM |
 | Storage | AWS S3 / Cloudinary |
 | Autenticazione | JWT + bcrypt |
-| Container | Docker + Docker Compose |
+| Avvio | node start.js |
 | CI/CD | GitHub Actions |
 
 ## Struttura del Progetto
@@ -23,7 +23,6 @@ velmoria/
 ├── frontend/         # App Ionic Angular
 ├── docs/             # Documentazione
 ├── .github/          # CI/CD workflows
-├── docker-compose.yml
 ├── README.md
 └── todo.md
 ```
@@ -32,7 +31,6 @@ velmoria/
 
 - Node.js >= 20 LTS
 - Git
-- Docker >= 24 + Docker Compose
 - PostgreSQL 15+
 - Ionic CLI: `npm install -g @ionic/cli`
 - Angular CLI: `npm install -g @angular/cli`

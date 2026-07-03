@@ -55,7 +55,7 @@ model Trip {
   startDate   DateTime  @map("start_date")
   endDate     DateTime? @map("end_date")
   isActive    Boolean   @default(true) @map("is_active")
-  isPublic    Boolean   @default(false) @map("is_public")
+  visibility  String    @default("private") @db.VarChar(20)
   countries   String[]  @default([]) @db.VarChar(100)
   cities      String[]  @default([]) @db.VarChar(200)
   totalDistance Float?  @map("total_distance")

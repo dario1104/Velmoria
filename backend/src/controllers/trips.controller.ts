@@ -164,3 +164,62 @@ export async function getTripsByUser(req: Request, res: Response, next: NextFunc
     next(err);
   }
 }
+
+export async function inviteCollaborator(req: Request, res: Response, next: NextFunction) {
+  const id = req.params.id as string;
+  try {
+    const result = await tripsService.inviteCollaborator(req.user!.id, id, req.body.receiverId, req.body.message);
+    res.status(201).json(result);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function getInvites(req: Request, res: Response, next: NextFunction) {
+  const id = req.params.id as string;
+  try {
+    const invites = await tripsService.getInvites(req.user!.id, id);
+    res.json(invites);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function getMyInvites(req: Request, res: Response, next: NextFunction) {
+  try {
+    const invites = await tripsService.getMyInvites(req.user!.id);
+    res.json(invites);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function acceptInvite(req: Request, res: Response, next: NextFunction) {
+  const id = req.params.id as string;
+  try {
+    const result = await tripsService.respondToInvite(req.user!.id, id, true);
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function rejectInvite(req: Request, res: Response, next: NextFunction) {
+  const id = req.params.id as string;
+  try {
+    const result = await tripsService.respondToInvite(req.user!.id, id, false);
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function setVisibility(req: Request, res: Response, next: NextFunction) {
+  const id = req.params.id as string;
+  try {
+    const trip = await tripsService.setVisibility(req.user!.id, id, req.body.visibility);
+    res.json(trip);
+  } catch (err) {
+    next(err);
+  }
+}

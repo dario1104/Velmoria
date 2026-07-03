@@ -123,13 +123,39 @@ export class TripsService {
     return prisma.trip.update({ where: { id }, data: { coverPhoto } });
   }
 
-  async setVisibility(userId: string, id: string, isPublic: boolean) {
+  async setVisibility(userId: string, id: string, visibility: string) {
     await this.findOne(userId, id);
-    return prisma.trip.update({ where: { id }, data: { isPublic } });
+    return prisma.trip.update({ where: { id }, data: { visibility } });
+  }
+
+  async addMember(userId: string, tripId: string, memberUserId: string, role: string = 'member') {
+    const trip = await this.findOne(userId, tripId);
+    if (trip.userId !== userId && !trip.members.some(m => m.role === 'admin' || m.role === 'owner')) {
+      throw new AppError(403, 'Non hai i permessi per aggiungere membri');
+    }
+    return prisma.tripMember.create({
+      data: { tripId, userId: memberUserId, role, color: this.randomColor() },
+    });
+  }
+
+  async removeMember(userId: string, tripId: string, memberId: string) {
+    const trip = await this.findOne(userId, tripId);
+    if (trip.userId !== userId) {
+      throw new AppError(403, 'Solo il proprietario può rimuovere membri');
+    }
+    return prisma.tripMember.delete({ where: { id: memberId } });
+  }
+
+  async updateMemberRole(userId: string, tripId: string, memberId: string, role: string) {
+    const trip = await this.findOne(userId, tripId);
+    if (trip.userId !== userId) {
+      throw new AppError(403, 'Solo il proprietario può modificare i ruoli');
+    }
+    return prisma.tripMember.update({ where: { id: memberId }, data: { role } });
   }
 
   async inviteCollaborator(userId: string, tripId: string, receiverId: string, message?: string) {
-    await this.findOne(userId, id);
+    await this.findOne(userId, tripId);
     const existing = await prisma.tripInvite.findUnique({
       where: { tripId_receiverId: { tripId, receiverId } },
     });
@@ -147,7 +173,19 @@ export class TripsService {
     });
   }
 
-  async getInvites(tripId: string) {
+  async getMyInvites(userId: string) {
+    return prisma.tripInvite.findMany({
+      where: { receiverId: userId, status: 'pending' },
+      include: {
+        trip: { select: { id: true, title: true, startDate: true } },
+        sender: { select: { id: true, name: true, email: true, avatarUrl: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async getInvites(userId: string, tripId: string) {
+    await this.findOne(userId, tripId);
     return prisma.tripInvite.findMany({
       where: { tripId },
       include: {
@@ -167,7 +205,7 @@ export class TripsService {
     }
     if (accept) {
       await prisma.tripMember.create({
-        data: { tripId: invite.tripId, userId, role: 'member' },
+        data: { tripId: invite.tripId, userId, role: 'member', color: this.randomColor() },
       });
       await prisma.tripInvite.update({
         where: { id: inviteId },
@@ -180,6 +218,40 @@ export class TripsService {
       });
     }
     return { accepted: accept };
+  }
+
+  async getPublicTrips(filters: Record<string, any> = {}) {
+    const where: any = { visibility: 'public' };
+    if (filters.country) where.countries = { has: filters.country };
+    if (filters.city) where.cities = { has: filters.city };
+    if (filters.search) {
+      where.OR = [
+        { title: { contains: filters.search, mode: 'insensitive' } },
+        { description: { contains: filters.search, mode: 'insensitive' } },
+      ];
+    }
+    return prisma.trip.findMany({
+      where,
+      orderBy: { startDate: 'desc' },
+      take: 50,
+      include: {
+        user: { select: { id: true, name: true, avatarUrl: true } },
+        _count: { select: { markers: true, points: true } },
+      },
+    });
+  }
+
+  async getTripsByUser(userId: string) {
+    return prisma.trip.findMany({
+      where: { userId, visibility: 'public' },
+      orderBy: { startDate: 'desc' },
+      include: { _count: { select: { markers: true, points: true } } },
+    });
+  }
+
+  private randomColor(): string {
+    const colors = ['#7c4dff', '#fc0b7b', '#ff6d00', '#00c853', '#00bcd4', '#ffd600', '#aa00ff', '#ff3d00'];
+    return colors[Math.floor(Math.random() * colors.length)];
   }
 }
 

@@ -1,0 +1,81 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Itinerary</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openAdd()">
+        <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="!loading; else loadingSpinner">
+    <ion-item *ngIf="entries.length === 0">
+      <ion-label class="ion-text-center ion-padding">
+        <p>No diary entries yet</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item *ngFor="let entry of entries; trackBy: trackById">
+      <ion-label>
+        <h2>{{ entry.title || 'Untitled' }}</h2>
+        <p>{{ entry.date | date }}</p>
+        <p *ngIf="entry.mood || entry.weather">
+          <ion-icon name="happy-outline" *ngIf="entry.mood"></ion-icon>
+          {{ entry.mood }} <span *ngIf="entry.weather">· {{ entry.weather }}</span>
+        </p>
+        <p *ngIf="entry.content">{{ entry.content }}</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button (click)="openEdit(entry)">
+          <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+        </ion-button>
+        <ion-button color="danger" (click)="deleteEntry(entry.id)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #loadingSpinner>
+    <div class="ion-text-center ion-padding">
+      <ion-spinner></ion-spinner>
+    </div>
+  </ng-template>
+
+  <ion-card *ngIf="showForm">
+    <ion-card-header>
+      <ion-card-title>{{ editingId ? 'Edit Entry' : 'New Entry' }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Date</ion-label>
+        <ion-input type="date" [(ngModel)]="formDate"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Title</ion-label>
+        <ion-input [(ngModel)]="formTitle"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Content</ion-label>
+        <ion-textarea [(ngModel)]="formContent"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Mood</ion-label>
+        <ion-input [(ngModel)]="formMood"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Weather</ion-label>
+        <ion-input [(ngModel)]="formWeather"></ion-input>
+      </ion-item>
+      <div class="ion-padding-top ion-text-end">
+        <ion-button fill="outline" (click)="cancelForm()">Cancel</ion-button>
+        <ion-button (click)="saveEntry()">Save</ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>GPS Replay</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner></ion-spinner>
+  </div>
+
+  <div *ngIf="!loading && gpsPoints.length === 0" class="ion-text-center ion-padding">
+    <p>No GPS data available</p>
+  </div>
+
+  <ion-card *ngIf="replayData && !loading">
+    <ion-card-header>
+      <ion-card-title>Replay Info</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Total points: {{ gpsPoints.length }}</p>
+      <p *ngIf="replayData.duration">Duration: {{ replayData.duration }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list>
+    <ion-item *ngFor="let point of gpsPoints; trackBy: trackByTimestamp">
+      <ion-label>
+        <h2>{{ point.latitude | number:'1.4-4' }}, {{ point.longitude | number:'1.4-4' }}</h2>
+        <p>
+          <span *ngIf="point.speed !== undefined">Speed: {{ point.speed }} m/s</span>
+          <span class="ion-padding-start">{{ point.timestamp | date:'medium' }}</span>
+        </p>
+        <p *ngIf="point.altitude !== undefined">Alt: {{ point.altitude }}m</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

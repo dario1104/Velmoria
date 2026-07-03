@@ -1,0 +1,20 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Moderation</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let report of reports">
+      <ion-label>
+        <h2>Report #{{ report.id }}</h2>
+        <p>{{ report.reason }}</p>
+        <small>{{ report.createdAt | date }}</small>
+      </ion-label>
+      <ion-button fill="clear" color="success" (click)="resolve(report.id)" slot="end" [disabled]="report.resolved">
+        <ion-icon name="checkmark-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

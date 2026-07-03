@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Import / Export</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Export</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="block" (click)="exportData()">
+        <ion-icon name="download-outline" slot="start"></ion-icon>
+        Export trips
+      </ion-button>
+      <ion-button expand="block" fill="outline" (click)="exportData()" class="ion-margin-top">
+        <ion-icon name="download-outline" slot="start"></ion-icon>
+        Export all data
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Import</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="block" color="secondary" (click)="importData()">
+        <ion-icon name="cloud-upload-outline" slot="start"></ion-icon>
+        Import from file
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

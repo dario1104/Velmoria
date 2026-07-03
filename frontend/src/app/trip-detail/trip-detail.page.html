@@ -53,6 +53,38 @@
   </div>
 
   <div class="section-card">
+    <h3>Sezioni viaggio</h3>
+    <div class="menu-row" routerLink="/itinerary/{{ trip?.id }}">
+      <ion-icon name="journal-outline"></ion-icon><span>Diario di viaggio</span>
+      <ion-icon name="chevron-forward" slot="end" class="arrow"></ion-icon>
+    </div>
+    <div class="menu-row" routerLink="/gallery/{{ trip?.id }}">
+      <ion-icon name="images-outline"></ion-icon><span>Galleria</span>
+      <ion-icon name="chevron-forward" slot="end" class="arrow"></ion-icon>
+    </div>
+    <div class="menu-row" routerLink="/expenses/{{ trip?.id }}">
+      <ion-icon name="wallet-outline"></ion-icon><span>Spese</span>
+      <ion-icon name="chevron-forward" slot="end" class="arrow"></ion-icon>
+    </div>
+    <div class="menu-row" routerLink="/packing/{{ trip?.id }}">
+      <ion-icon name="bag-check-outline"></ion-icon><span>Packing list</span>
+      <ion-icon name="chevron-forward" slot="end" class="arrow"></ion-icon>
+    </div>
+    <div class="menu-row" routerLink="/activities/{{ trip?.id }}">
+      <ion-icon name="time-outline"></ion-icon><span>Attività</span>
+      <ion-icon name="chevron-forward" slot="end" class="arrow"></ion-icon>
+    </div>
+    <div class="menu-row" routerLink="/replay/{{ trip?.id }}">
+      <ion-icon name="play-outline"></ion-icon><span>Replay percorso</span>
+      <ion-icon name="chevron-forward" slot="end" class="arrow"></ion-icon>
+    </div>
+    <div class="menu-row" routerLink="/stats/{{ trip?.id }}">
+      <ion-icon name="bar-chart-outline"></ion-icon><span>Statistiche</span>
+      <ion-icon name="chevron-forward" slot="end" class="arrow"></ion-icon>
+    </div>
+  </div>
+
+  <div class="section-card">
     <h3>Marker <span class="count">({{ markers.length }})</span></h3>
     <div *ngIf="markers.length === 0" class="empty-inline">
       <p>Nessun marker aggiunto</p>
@@ -72,6 +104,10 @@
   </div>
 
   <div class="ion-padding actions">
+    <ion-button expand="block" (click)="toggleTracking()" *ngIf="trip?.isActive" [color]="tracking ? 'danger' : 'primary'">
+      <ion-icon slot="start" [name]="tracking ? 'stop-outline' : 'navigate-outline'"></ion-icon>
+      {{ tracking ? 'Ferma tracking' : 'Avvia tracking GPS' }}
+    </ion-button>
     <ion-button expand="block" color="danger" fill="outline" (click)="finish()" *ngIf="trip?.isActive">
       Concludi viaggio
     </ion-button>
