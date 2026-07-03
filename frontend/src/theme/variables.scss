@@ -55,13 +55,19 @@
   --ion-color-light-shade: #1a1a1a;
   --ion-color-light-tint: #353535;
 
-  --ion-background-color: #000000;
-  --ion-background-color-rgb: 0, 0, 0;
+  --ion-background-color: #0a0a0f;
+  --ion-background-color-rgb: 10, 10, 15;
   --ion-text-color: #ffffff;
   --ion-text-color-rgb: 255, 255, 255;
-  --ion-border-color: #2a2a2a;
-  --ion-item-background: #121212;
-  --ion-toolbar-background: #000000;
-  --ion-tab-bar-background: #121212;
-  --ion-card-background: #121212;
+  --ion-border-color: rgba(255, 255, 255, 0.06);
+  --ion-item-background: rgba(255, 255, 255, 0.04);
+  --ion-toolbar-background: rgba(10, 10, 15, 0.85);
+  --ion-tab-bar-background: rgba(18, 18, 28, 0.92);
+  --ion-card-background: rgba(255, 255, 255, 0.04);
+
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --ion-safe-area-top: 20px;
+  --ion-safe-area-bottom: 20px;
 }

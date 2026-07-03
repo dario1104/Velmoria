@@ -1,0 +1,77 @@
+ion-menu {
+  --ion-background-color: #0a0a0f;
+  --ion-item-background: transparent;
+  --ion-border-color: rgba(255, 255, 255, 0.04);
+  --width: 280px;
+
+  &::part(backdrop) {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+ion-menu ion-content {
+  --background: #0a0a0f;
+}
+
+.menu-header {
+  --background: #0a0a0f;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  padding: 20px 0 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.menu-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #7c4dff, #aa5eff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+  }
+}
+
+.menu-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.menu-section-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--ion-color-medium);
+  padding: 20px 20px 8px;
+}
+
+ion-item {
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --min-height: 48px;
+  --border-radius: 0;
+  --background: transparent;
+  --background-hover: rgba(124, 77, 255, 0.06);
+  --background-activated: rgba(124, 77, 255, 0.1);
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  ion-icon {
+    font-size: 20px;
+    color: var(--ion-color-medium);
+    margin-right: 4px;
+  }
+}

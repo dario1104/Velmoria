@@ -11,18 +11,18 @@
         <img [src]="friend.avatar || 'assets/default-avatar.png'" alt="" />
       </ion-avatar>
       <ion-label>
-        <h2>{{ friend.name || 'Unknown' }}</h2>
+        <h2>{{ friend.name || 'Sconosciuto' }}</h2>
         <p>{{ friend.email }}</p>
       </ion-label>
     </ion-item>
   </ion-list>
 
   <ion-item *ngIf="loading">
-    <ion-label>Loading...</ion-label>
+    <ion-label>Caricamento...</ion-label>
   </ion-item>
 
   <ion-item *ngIf="friends.length === 0 && !loading && !error">
-    <ion-label>No friends to chat with</ion-label>
+    <ion-label>Nessun amico con cui chattare</ion-label>
   </ion-item>
 
   <ion-item *ngIf="error">

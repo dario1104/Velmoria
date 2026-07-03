@@ -19,7 +19,13 @@ export class LoginPage {
   login(): void {
     this.error = '';
     this.auth.login(this.email, this.password).subscribe({
-      next: () => this.router.navigate(['/trips']),
+      next: (res: any) => {
+        if (res.require2fa) {
+          this.router.navigate(['/verify-2fa'], { state: { email: res.email, userId: res.userId } });
+        } else {
+          this.router.navigate(['/tabs/dashboard']);
+        }
+      },
       error: (err) => {
         this.error = err.error?.error || 'Errore di connessione';
       },

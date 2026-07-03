@@ -9,12 +9,14 @@ import {
   resetPasswordValidator,
   changePasswordValidator,
   updateProfileValidator,
+  verify2faValidator,
 } from '../validators/auth.validators';
 
 const router = Router();
 
 router.post('/register', registerValidator, authController.register);
 router.post('/login', loginValidator, authController.login);
+router.post('/verify-2fa', verify2faValidator, authController.verify2fa);
 router.post('/refresh', refreshValidator, authController.refresh);
 router.post('/forgot-password', forgotPasswordValidator, authController.forgotPassword);
 router.post('/reset-password', resetPasswordValidator, authController.resetPassword);

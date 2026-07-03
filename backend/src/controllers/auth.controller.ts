@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
 import { authService } from '../services/auth.service';
+import { creaCodice, verificaCodice } from '../services/codice-verifica.service';
+import { sendCodiceVerifica } from '../services/email.service';
 
 export async function register(req: Request, res: Response, next: NextFunction) {
   const errors = validationResult(req);
@@ -10,7 +12,7 @@ export async function register(req: Request, res: Response, next: NextFunction) 
   }
 
   try {
-    const result = await authService.register(req.body.email, req.body.password, req.body.name);
+    const result = await authService.register(req.body.email, req.body.password, req.body.name, req.body.bio, req.body.phone);
     res.status(201).json(result);
   } catch (err) {
     next(err);
@@ -25,7 +27,29 @@ export async function login(req: Request, res: Response, next: NextFunction) {
   }
 
   try {
-    const result = await authService.login(req.body.email, req.body.password);
+    const user = await authService.verifyCredentials(req.body.email, req.body.password);
+    const codice = await creaCodice(user.id, '2fa_login');
+    await sendCodiceVerifica(user.email, codice);
+    res.json({ require2fa: true, userId: user.id, email: user.email });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function verify2fa(req: Request, res: Response, next: NextFunction) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(400).json({ errors: errors.array() });
+    return;
+  }
+
+  try {
+    const valido = await verificaCodice(req.body.userId, req.body.codice, '2fa_login');
+    if (!valido) {
+      res.status(401).json({ error: 'Codice non valido o scaduto' });
+      return;
+    }
+    const result = await authService.completeLogin(req.body.userId);
     res.json(result);
   } catch (err) {
     next(err);
@@ -48,7 +72,8 @@ export async function refresh(req: Request, res: Response, next: NextFunction) {
 }
 
 export async function profile(req: Request, res: Response) {
-  res.json(req.user);
+  const user = await authService.getProfile(req.user!.id);
+  res.json(user);
 }
 
 export async function forgotPassword(req: Request, res: Response, next: NextFunction) {
@@ -83,7 +108,7 @@ export async function resetPassword(req: Request, res: Response, next: NextFunct
 
 export async function verifyEmail(req: Request, res: Response, next: NextFunction) {
   try {
-    await authService.verifyEmail(req.params.token);
+    await authService.verifyEmail(req.params.token as string);
     res.json({ message: 'Email verificata con successo' });
   } catch (err) {
     next(err);

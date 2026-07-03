@@ -1,9 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button text="Indietro"></ion-back-button>
     </ion-buttons>
-    <ion-title>Stats</ion-title>
+    <ion-title>Statistiche</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,7 +13,7 @@
   </div>
 
   <div *ngIf="!loading && !stats" class="ion-text-center ion-padding">
-    <p>No stats available</p>
+    <p>Nessuna statistica disponibile</p>
   </div>
 
   <ion-card *ngIf="trip">
@@ -21,39 +21,39 @@
       <ion-card-title>{{ trip.title }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>Started: {{ trip.startDate | date }}</p>
-      <p *ngIf="trip.endDate">Ended: {{ trip.endDate | date }}</p>
+      <p>Iniziato: {{ trip.startDate | date }}</p>
+      <p *ngIf="trip.endDate">Concluso: {{ trip.endDate | date }}</p>
     </ion-card-content>
   </ion-card>
 
   <ion-card *ngIf="stats">
     <ion-card-header>
-      <ion-card-title>Trip Statistics</ion-card-title>
+      <ion-card-title>Statistiche viaggio</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-item>
         <ion-icon name="compass-outline" slot="start"></ion-icon>
-        <ion-label>Total Distance</ion-label>
+        <ion-label>Distanza totale</ion-label>
         <ion-note slot="end">{{ stats.totalDistance }} km</ion-note>
       </ion-item>
       <ion-item>
         <ion-icon name="time-outline" slot="start"></ion-icon>
-        <ion-label>Total Time</ion-label>
+        <ion-label>Tempo totale</ion-label>
         <ion-note slot="end">{{ stats.totalTime }}</ion-note>
       </ion-item>
       <ion-item>
         <ion-icon name="location-outline" slot="start"></ion-icon>
-        <ion-label>Markers</ion-label>
+        <ion-label>Marker</ion-label>
         <ion-note slot="end">{{ stats.markersCount }}</ion-note>
       </ion-item>
       <ion-item>
         <ion-icon name="ellipse-outline" slot="start"></ion-icon>
-        <ion-label>GPS Points</ion-label>
+        <ion-label>Punti GPS</ion-label>
         <ion-note slot="end">{{ stats.pointsCount }}</ion-note>
       </ion-item>
       <ion-item *ngIf="stats.avgSpeed">
         <ion-icon name="speedometer-outline" slot="start"></ion-icon>
-        <ion-label>Avg Speed</ion-label>
+        <ion-label>Velocità media</ion-label>
         <ion-note slot="end">{{ stats.avgSpeed }}</ion-note>
       </ion-item>
     </ion-card-content>

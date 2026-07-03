@@ -1,9 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button text="Indietro"></ion-back-button>
     </ion-buttons>
-    <ion-title>Expenses</ion-title>
+    <ion-title>Spese</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openAdd()">
         <ion-icon slot="icon-only" name="add-outline"></ion-icon>
@@ -16,7 +16,7 @@
   <ion-list *ngIf="!loading; else loadingSpinner">
     <ion-item *ngIf="expenses.length === 0">
       <ion-label class="ion-text-center ion-padding">
-        <p>No expenses recorded</p>
+        <p>Nessuna spesa registrata</p>
       </ion-label>
     </ion-item>
 
@@ -40,24 +40,24 @@
 
   <ion-card *ngIf="showForm">
     <ion-card-header>
-      <ion-card-title>Add Expense</ion-card-title>
+      <ion-card-title>Aggiungi spesa</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-item>
-        <ion-label position="floating">Amount</ion-label>
+        <ion-label position="floating">Importo</ion-label>
         <ion-input type="number" [(ngModel)]="formAmount"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Category</ion-label>
+        <ion-label position="floating">Categoria</ion-label>
         <ion-input [(ngModel)]="formCategory"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Description</ion-label>
+        <ion-label position="floating">Descrizione</ion-label>
         <ion-input [(ngModel)]="formDescription"></ion-input>
       </ion-item>
       <div class="ion-padding-top ion-text-end">
-        <ion-button fill="outline" (click)="cancelForm()">Cancel</ion-button>
-        <ion-button (click)="saveExpense()">Save</ion-button>
+        <ion-button fill="outline" (click)="cancelForm()">Annulla</ion-button>
+        <ion-button (click)="saveExpense()">Salva</ion-button>
       </div>
     </ion-card-content>
   </ion-card>

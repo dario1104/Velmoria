@@ -8,6 +8,10 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
+        path: 'dashboard',
+        loadChildren: () => import('../dashboard/dashboard.module').then(m => m.DashboardPageModule),
+      },
+      {
         path: 'trips',
         loadChildren: () => import('../trips/trips.module').then(m => m.TripsPageModule),
       },
@@ -19,7 +23,7 @@ const routes: Routes = [
         path: 'profile',
         loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule),
       },
-      { path: '', redirectTo: 'trips', pathMatch: 'full' },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },
 ];

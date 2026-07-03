@@ -1,67 +1,22 @@
-.section-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 20px 20px 4px;
-
-  h2 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin: 0;
-  }
-}
-
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 64px 24px;
-
-  .empty-icon {
-    width: 80px;
-    height: 80px;
-    border-radius: 24px;
-    background: rgba(124, 77, 255, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 16px;
-
-    ion-icon {
-      font-size: 40px;
-      color: var(--ion-color-primary);
-    }
-  }
-
-  h3 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin: 0 0 4px;
-  }
-
-  p {
-    margin: 0 0 20px;
-    color: var(--ion-color-medium);
-  }
-}
-
 .trip-list {
-  padding: 8px 16px 80px;
+  padding: 4px 16px 80px;
 }
 
 .trip-card {
-  background: #121212;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 20px;
-  padding: 18px;
-  margin-bottom: 12px;
+  padding: 18px 20px;
+  margin-bottom: 10px;
   cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  transition: transform 0.15s, background 0.2s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
 
   &:active {
-    transform: scale(0.98);
-    box-shadow: 0 4px 20px rgba(124, 77, 255, 0.1);
+    transform: scale(0.985);
   }
 }
 
@@ -69,7 +24,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .trip-info {
@@ -77,34 +32,51 @@
   margin-right: 12px;
 
   h3 {
-    margin: 0 0 2px;
+    margin: 0 0 4px;
     font-size: 1.05rem;
-    font-weight: 600;
+    font-weight: 700;
   }
 }
 
 .trip-date {
   color: var(--ion-color-medium);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  ion-icon {
+    font-size: 14px;
+  }
 }
 
 .trip-desc {
-  color: rgba(255, 255, 255, 0.6);
-  margin: 6px 0 10px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 6px 0 12px;
   font-size: 0.85rem;
-  line-height: 1.4;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .trip-stats {
   display: flex;
-  gap: 16px;
-  font-size: 0.78rem;
+  gap: 20px;
+  font-size: 0.75rem;
   color: var(--ion-color-medium);
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
 
   ion-icon {
     font-size: 14px;
-    vertical-align: middle;
-    margin-right: 2px;
   }
 }

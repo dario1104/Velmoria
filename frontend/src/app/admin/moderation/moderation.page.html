@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Moderation</ion-title>
+    <ion-title>Moderazione</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,7 +8,7 @@
   <ion-list>
     <ion-item *ngFor="let report of reports">
       <ion-label>
-        <h2>Report #{{ report.id }}</h2>
+        <h2>Segnalazione #{{ report.id }}</h2>
         <p>{{ report.reason }}</p>
         <small>{{ report.createdAt | date }}</small>
       </ion-label>

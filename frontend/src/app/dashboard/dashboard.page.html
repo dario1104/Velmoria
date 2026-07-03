@@ -1,0 +1,107 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="openMenu()">
+        <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Velmoria</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="welcome-section slide-up">
+    <div class="welcome-bg"></div>
+    <div class="welcome-content">
+      <h1>Bentornato, <span class="gradient-text">{{ user?.name || 'Viaggiatore' }}</span></h1>
+      <p>Pronto per la prossima avventura?</p>
+    </div>
+  </div>
+
+  <div class="stats-row fade-in" style="animation-delay: 0.1s">
+    <div class="stat-card">
+      <div class="stat-icon" style="background: rgba(124,77,255,0.1)">
+        <ion-icon name="map-outline" style="color: #7c4dff"></ion-icon>
+      </div>
+      <span class="stat-num">{{ stats.total }}</span>
+      <span class="stat-label">Viaggi</span>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background: rgba(252,11,123,0.1)">
+        <ion-icon name="navigate-outline" style="color: #fc0b7b"></ion-icon>
+      </div>
+      <span class="stat-num">{{ stats.active }}</span>
+      <span class="stat-label">In corso</span>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background: rgba(0,200,83,0.1)">
+        <ion-icon name="pin-outline" style="color: #00c853"></ion-icon>
+      </div>
+      <span class="stat-num">{{ stats.markers }}</span>
+      <span class="stat-label">Marker</span>
+    </div>
+  </div>
+
+  <div *ngIf="activeTrip" class="active-trip-card glass-card fade-in" style="animation-delay: 0.15s" routerLink="/trip-detail/{{ activeTrip.id }}">
+    <div class="active-trip-left">
+      <div class="active-dot"></div>
+      <div class="active-trip-info">
+        <span class="active-label">Viaggio in corso</span>
+        <strong>{{ activeTrip.title }}</strong>
+      </div>
+    </div>
+    <ion-icon name="chevron-forward" class="arrow"></ion-icon>
+  </div>
+
+  <div class="quick-actions fade-in" style="animation-delay: 0.2s">
+    <h2>Azioni rapide</h2>
+    <div class="actions-row">
+      <div class="action-item" (click)="newTrip()">
+        <div class="action-icon" style="background: rgba(124,77,255,0.1)">
+          <ion-icon name="add-outline" style="color: #7c4dff"></ion-icon>
+        </div>
+        <span>Nuovo viaggio</span>
+      </div>
+      <div class="action-item" routerLink="/trips">
+        <div class="action-icon" style="background: rgba(252,11,123,0.1)">
+          <ion-icon name="time-outline" style="color: #fc0b7b"></ion-icon>
+        </div>
+        <span>Storico</span>
+      </div>
+      <div class="action-item" routerLink="/map">
+        <div class="action-icon" style="background: rgba(0,200,83,0.1)">
+          <ion-icon name="compass-outline" style="color: #00c853"></ion-icon>
+        </div>
+        <span>Mappa</span>
+      </div>
+      <div class="action-item" routerLink="/explore">
+        <div class="action-icon" style="background: rgba(255,171,0,0.1)">
+          <ion-icon name="globe-outline" style="color: #ffab00"></ion-icon>
+        </div>
+        <span>Esplora</span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="recentTrips.length > 0" class="recent-section fade-in" style="animation-delay: 0.25s">
+    <div class="recent-header">
+      <h2>Viaggi recenti</h2>
+      <span routerLink="/trips" class="see-all">Vedi tutti</span>
+    </div>
+    <div *ngFor="let trip of recentTrips" class="recent-item" routerLink="/trip-detail/{{ trip.id }}">
+      <div class="recent-dot" [style.background]="trip.isActive ? '#7c4dff' : 'rgba(255,255,255,0.1)'"></div>
+      <div class="recent-info">
+        <strong>{{ trip.title }}</strong>
+        <span>{{ trip.startDate | date }}</span>
+      </div>
+      <ion-note>{{ trip._count?.markers || 0 }} marker</ion-note>
+    </div>
+  </div>
+
+  <div class="footer-space"></div>
+</ion-content>

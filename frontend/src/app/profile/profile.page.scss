@@ -2,51 +2,63 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 16px 24px;
+  padding: 48px 16px 32px;
+  position: relative;
+}
+
+.avatar-glow {
+  position: absolute;
+  top: 10px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124, 77, 255, 0.15), transparent 70%);
+  pointer-events: none;
 }
 
 .avatar {
-  width: 88px;
-  height: 88px;
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
   background: linear-gradient(135deg, #7c4dff, #aa5eff);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 16px;
-  box-shadow: 0 8px 32px rgba(124, 77, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(124, 77, 255, 0.25);
+  position: relative;
 
   ion-icon {
-    font-size: 44px;
+    font-size: 48px;
     color: #ffffff;
   }
 }
 
 h2 {
   margin: 0;
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   font-weight: 700;
 }
 
 p {
   margin: 4px 0 0;
   color: var(--ion-color-medium);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
 .menu-card {
-  margin: 8px 16px;
-  background: #121212;
+  margin: 4px 16px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 20px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .menu-item {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 16px 18px;
+  padding: 15px 18px;
   cursor: pointer;
   transition: background 0.15s;
 
@@ -60,8 +72,8 @@ p {
 }
 
 .menu-icon {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 14px;
   display: flex;
   align-items: center;
@@ -69,17 +81,17 @@ p {
   flex-shrink: 0;
 
   ion-icon {
-    font-size: 22px;
+    font-size: 20px;
   }
 }
 
 span {
   flex: 1;
-  font-size: 0.95rem;
+  font-size: 0.93rem;
   font-weight: 500;
 }
 
 .arrow {
-  font-size: 18px;
-  color: rgba(255, 255, 255, 0.2);
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.15);
 }

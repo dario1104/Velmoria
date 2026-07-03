@@ -1,9 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button text="Indietro"></ion-back-button>
     </ion-buttons>
-    <ion-title>Gallery</ion-title>
+    <ion-title>Galleria</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,7 +13,7 @@
   </div>
 
   <div *ngIf="!loading && markers.length === 0" class="ion-text-center ion-padding">
-    <p>No markers with media yet</p>
+    <p>Nessun marker con media ancora</p>
   </div>
 
   <ion-card *ngFor="let marker of markers; trackBy: trackByMarkerId">
@@ -28,7 +28,7 @@
           <video *ngIf="m.type === 'video'" [src]="m.url" controls></video>
         </div>
       </div>
-      <p *ngIf="getMedia(marker).length === 0" class="ion-text-center ion-padding">No media</p>
+      <p *ngIf="getMedia(marker).length === 0" class="ion-text-center ion-padding">Nessun media</p>
     </ion-card-content>
   </ion-card>
 </ion-content>

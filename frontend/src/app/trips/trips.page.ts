@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { TripsService, Trip } from '../services/trips.service';
 import { AuthService } from '../services/auth.service';
@@ -9,7 +9,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['trips.page.scss'],
   standalone: false,
 })
-export class TripsPage implements OnInit {
+export class TripsPage {
   trips: Trip[] = [];
 
   constructor(
@@ -18,7 +18,7 @@ export class TripsPage implements OnInit {
     private router: Router,
   ) {}
 
-  ngOnInit(): void {
+  ionViewWillEnter(): void {
     this.loadTrips();
   }
 

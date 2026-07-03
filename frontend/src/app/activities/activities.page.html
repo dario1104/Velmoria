@@ -1,9 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button text="Indietro"></ion-back-button>
     </ion-buttons>
-    <ion-title>Activities</ion-title>
+    <ion-title>Attività</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,7 +11,7 @@
   <ion-list *ngIf="!loading; else loadingSpinner">
     <ion-item *ngIf="events.length === 0">
       <ion-label class="ion-text-center ion-padding">
-        <p>No timeline events yet</p>
+        <p>Nessun evento ancora</p>
       </ion-label>
     </ion-item>
 

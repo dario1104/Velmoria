@@ -10,6 +10,8 @@ import { AuthService } from '../services/auth.service';
 export class EditProfilePage implements OnInit {
   name = '';
   email = '';
+  phone = '';
+  bio = '';
   error = '';
   success = false;
 
@@ -17,9 +19,11 @@ export class EditProfilePage implements OnInit {
 
   ngOnInit(): void {
     this.auth.profile().subscribe({
-      next: (user) => {
+      next: (user: any) => {
         this.name = user.name || '';
         this.email = user.email;
+        this.phone = user.phone || '';
+        this.bio = user.bio || '';
       },
       error: (err) => {
         this.error = err.error?.error || 'Errore nel caricamento del profilo';
@@ -34,13 +38,12 @@ export class EditProfilePage implements OnInit {
       this.error = 'Il nome non può essere vuoto';
       return;
     }
-    this.auth.updateProfile({ name: this.name }).subscribe({
-      next: () => {
-        this.success = true;
-      },
-      error: (err) => {
-        this.error = err.error?.error || 'Errore di connessione';
-      },
+    const data: any = { name: this.name };
+    if (this.phone !== undefined) data.phone = this.phone;
+    if (this.bio !== undefined) data.bio = this.bio;
+    this.auth.updateProfile(data).subscribe({
+      next: () => { this.success = true; },
+      error: (err) => { this.error = err.error?.error || 'Errore di connessione'; },
     });
   }
 }

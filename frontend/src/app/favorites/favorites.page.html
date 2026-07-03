@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Favorites</ion-title>
+    <ion-title>Preferiti</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,7 +8,7 @@
   <ion-list *ngIf="favorites.length > 0; else empty">
     <ion-item *ngFor="let fav of favorites; trackBy: trackByFavoriteId">
       <ion-label>
-        <h2>{{ fav.poi?.name || 'Unknown Place' }}</h2>
+        <h2>{{ fav.poi?.name || 'Luogo sconosciuto' }}</h2>
         <p *ngIf="fav.poi?.category">{{ fav.poi?.category }}</p>
       </ion-label>
       <ion-button slot="end" color="danger" fill="clear" (click)="remove(fav.poiId)">
@@ -19,7 +19,7 @@
 
   <ng-template #empty>
     <ion-text color="medium" class="ion-padding">
-      <p>No favorites yet.</p>
+      <p>Nessun preferito ancora.</p>
     </ion-text>
   </ng-template>
 </ion-content>

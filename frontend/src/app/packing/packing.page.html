@@ -1,9 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button text="Indietro"></ion-back-button>
     </ion-buttons>
-    <ion-title>Packing List</ion-title>
+    <ion-title>Lista bagaglio</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openAdd()">
         <ion-icon slot="icon-only" name="add-outline"></ion-icon>
@@ -16,7 +16,7 @@
   <ion-list *ngIf="!loading; else loadingSpinner">
     <ion-item *ngIf="items.length === 0">
       <ion-label class="ion-text-center ion-padding">
-        <p>No packing items yet</p>
+        <p>Nessun oggetto ancora</p>
       </ion-label>
     </ion-item>
 
@@ -25,7 +25,7 @@
       <ion-label>
         <h2 [class.strikethrough]="item.packed">{{ item.item }}</h2>
         <p *ngIf="item.quantity || item.category">
-          <span *ngIf="item.quantity">Qty: {{ item.quantity }}</span>
+          <span *ngIf="item.quantity">Qtà: {{ item.quantity }}</span>
           <span *ngIf="item.category"> · {{ item.category }}</span>
         </p>
       </ion-label>
@@ -43,24 +43,24 @@
 
   <ion-card *ngIf="showForm">
     <ion-card-header>
-      <ion-card-title>Add Item</ion-card-title>
+      <ion-card-title>Aggiungi oggetto</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-item>
-        <ion-label position="floating">Item</ion-label>
+        <ion-label position="floating">Oggetto</ion-label>
         <ion-input [(ngModel)]="formItem"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Quantity</ion-label>
+        <ion-label position="floating">Quantità</ion-label>
         <ion-input type="number" [(ngModel)]="formQuantity"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Category</ion-label>
+        <ion-label position="floating">Categoria</ion-label>
         <ion-input [(ngModel)]="formCategory"></ion-input>
       </ion-item>
       <div class="ion-padding-top ion-text-end">
-        <ion-button fill="outline" (click)="cancelForm()">Cancel</ion-button>
-        <ion-button (click)="saveItem()">Save</ion-button>
+        <ion-button fill="outline" (click)="cancelForm()">Annulla</ion-button>
+        <ion-button (click)="saveItem()">Salva</ion-button>
       </div>
     </ion-card-content>
   </ion-card>

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Following</ion-title>
+    <ion-title>Seguiti</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,18 +11,18 @@
         <img [src]="user.avatar || 'assets/default-avatar.png'" alt="" />
       </ion-avatar>
       <ion-label>
-        <h2>{{ user.name || 'Unknown' }}</h2>
+        <h2>{{ user.name || 'Sconosciuto' }}</h2>
         <p>{{ user.email }}</p>
       </ion-label>
     </ion-item>
   </ion-list>
 
   <ion-item *ngIf="loading">
-    <ion-label>Loading...</ion-label>
+    <ion-label>Caricamento...</ion-label>
   </ion-item>
 
   <ion-item *ngIf="following.length === 0 && !loading && !error">
-    <ion-label>Not following anyone yet</ion-label>
+    <ion-label>Non segui ancora nessuno</ion-label>
   </ion-item>
 
   <ion-item *ngIf="error">

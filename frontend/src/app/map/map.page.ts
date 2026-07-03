@@ -32,6 +32,7 @@ export class MapPage implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.initMap();
+    setTimeout(() => this.map?.invalidateSize(), 300);
   }
 
   onTripChange(): void {

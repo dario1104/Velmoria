@@ -28,13 +28,21 @@ export class TripDetailPage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id')!;
-    this.tripsService.findOne(id).subscribe(t => this.trip = t);
+    this.tripsService.findOne(id).subscribe(t => {
+      this.trip = t;
+      if (this.route.snapshot.queryParamMap.get('startTracking') === 'true' && t.isActive) {
+        this.geo.startTracking(t.id);
+        this.tracking = true;
+      }
+    });
     this.markersService.findByTrip(id).subscribe(m => this.markers = m);
     this.tripsService.stats(id).subscribe(s => this.stats = s);
   }
 
   finish(): void {
     if (!this.trip) return;
+    this.geo.stopTracking();
+    this.tracking = false;
     this.tripsService.finish(this.trip.id).subscribe(() => {
       this.trip!.isActive = false;
     });

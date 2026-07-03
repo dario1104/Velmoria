@@ -16,9 +16,9 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  login(email: string, password: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.api}/auth/login`, { email, password })
-      .pipe(tap(r => this.storeTokens(r)));
+  login(email: string, password: string): Observable<any> {
+    return this.http.post(`${this.api}/auth/login`, { email, password })
+      .pipe(tap((r: any) => { if (r.accessToken) this.storeTokens(r); }));
   }
 
   register(email: string, password: string, name?: string): Observable<AuthResponse> {
@@ -42,7 +42,19 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return !!this.getAccessToken();
+    const token = this.getAccessToken();
+    if (!token) return false;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      if (payload.exp && Date.now() >= payload.exp * 1000) {
+        this.logout();
+        return false;
+      }
+      return true;
+    } catch {
+      this.logout();
+      return false;
+    }
   }
 
   verifyEmail(token: string): Observable<any> {
@@ -61,7 +73,12 @@ export class AuthService {
     return this.http.post(`${this.api}/auth/change-password`, { currentPassword, newPassword });
   }
 
-  updateProfile(data: { name?: string }): Observable<any> {
+  verify2fa(userId: string, codice: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.api}/auth/verify-2fa`, { userId, codice })
+      .pipe(tap(r => this.storeTokens(r)));
+  }
+
+  updateProfile(data: { name?: string; bio?: string; phone?: string; avatarUrl?: string }): Observable<any> {
     return this.http.patch(`${this.api}/auth/profile`, data);
   }
 

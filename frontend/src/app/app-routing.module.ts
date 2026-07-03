@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'forgot-password', loadChildren: () => import('./forgot-password/forgot-password.module').then(m => m.ForgotPasswordPageModule) },
   { path: 'reset-password', loadChildren: () => import('./reset-password/reset-password.module').then(m => m.ResetPasswordPageModule) },
   { path: 'verify-email', loadChildren: () => import('./verify-email/verify-email.module').then(m => m.VerifyEmailPageModule) },
+  { path: 'verify-2fa', loadChildren: () => import('./verify-2fa/verify-2fa.module').then(m => m.Verify2faPageModule) },
   { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomePageModule) },
 
   { path: 'trips', loadChildren: () => import('./trips/trips.module').then(m => m.TripsPageModule), canActivate: [AuthGuard] },
@@ -47,7 +48,7 @@ const routes: Routes = [
   { path: 'admin/moderation', loadChildren: () => import('./admin/moderation/moderation.module').then(m => m.ModerationPageModule), canActivate: [AuthGuard] },
   { path: 'tabs', loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule), canActivate: [AuthGuard] },
 
-  { path: '', redirectTo: 'trips', pathMatch: 'full' },
+  { path: '', redirectTo: 'tabs/dashboard', pathMatch: 'full' },
 ];
 
 @NgModule({

@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Wishlist</ion-title>
+    <ion-title>Lista desideri</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="showForm = !showForm">
         <ion-icon slot="icon-only" [name]="showForm ? 'close-outline' : 'add-outline'"></ion-icon>
@@ -12,20 +12,20 @@
 <ion-content>
   <ion-list *ngIf="showForm">
     <ion-item>
-      <ion-label position="stacked">Title</ion-label>
-      <ion-input [(ngModel)]="title" placeholder="Trip title"></ion-input>
+      <ion-label position="stacked">Titolo</ion-label>
+      <ion-input [(ngModel)]="title" placeholder="Titolo viaggio"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="stacked">Destination</ion-label>
-      <ion-input [(ngModel)]="destination" placeholder="Where?"></ion-input>
+      <ion-label position="stacked">Destinazione</ion-label>
+      <ion-input [(ngModel)]="destination" placeholder="Dove?"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="stacked">Notes</ion-label>
-      <ion-textarea [(ngModel)]="notes" rows="3" placeholder="Any notes..."></ion-textarea>
+      <ion-label position="stacked">Note</ion-label>
+      <ion-textarea [(ngModel)]="notes" rows="3" placeholder="Aggiungi note..."></ion-textarea>
     </ion-item>
     <div class="ion-padding">
       <ion-button expand="block" (click)="add()" [disabled]="!title.trim()">
-        Add to Wishlist
+        Aggiungi alla lista
       </ion-button>
     </div>
   </ion-list>
@@ -46,7 +46,7 @@
 
   <ng-template #empty>
     <ion-text color="medium" class="ion-padding">
-      <p>Your wishlist is empty.</p>
+      <p>La lista desideri è vuota.</p>
     </ion-text>
   </ng-template>
 </ion-content>

@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Explore</ion-title>
+    <ion-title>Esplora</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,7 +8,7 @@
   <ion-searchbar
     [(ngModel)]="query"
     (ionInput)="onSearch()"
-    placeholder="Search places..."
+    placeholder="Cerca luoghi..."
   ></ion-searchbar>
 
   <ng-container *ngIf="searchResults !== null; else browseView">
@@ -26,7 +26,7 @@
     </ion-list>
     <ng-template #noResults>
       <ion-text color="medium" class="ion-padding">
-        <p>No results found for "{{ query }}"</p>
+        <p>Nessun risultato per "{{ query }}"</p>
       </ion-text>
     </ng-template>
   </ng-container>
@@ -34,7 +34,7 @@
   <ng-template #browseView>
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Featured POIs</ion-card-title>
+        <ion-card-title>Luoghi in evidenza</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-list *ngIf="featuredPois.length > 0">
@@ -50,14 +50,14 @@
           </ion-item>
         </ion-list>
         <ion-text color="medium" *ngIf="featuredPois.length === 0">
-          <p>No featured places available.</p>
+          <p>Nessun luogo in evidenza.</p>
         </ion-text>
       </ion-card-content>
     </ion-card>
 
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Trending Now</ion-card-title>
+        <ion-card-title>Tendenze</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-list *ngIf="trendingPois.length > 0">
@@ -73,7 +73,7 @@
           </ion-item>
         </ion-list>
         <ion-text color="medium" *ngIf="trendingPois.length === 0">
-          <p>No trending places right now.</p>
+          <p>Nessuna tendenza in questo momento.</p>
         </ion-text>
       </ion-card-content>
     </ion-card>

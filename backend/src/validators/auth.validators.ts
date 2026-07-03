@@ -86,6 +86,17 @@ export const changePasswordValidator = [
     .withMessage('La nuova password deve contenere un carattere speciale'),
 ];
 
+export const verify2faValidator = [
+  body('userId')
+    .isString()
+    .notEmpty()
+    .withMessage('ID utente richiesto'),
+  body('codice')
+    .isString()
+    .isLength({ min: 6, max: 6 })
+    .withMessage('Codice non valido'),
+];
+
 export const updateProfileValidator = [
   body('name')
     .optional()

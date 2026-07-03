@@ -1,16 +1,16 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button text="Indietro"></ion-back-button>
     </ion-buttons>
-    <ion-title>Write a Review</ion-title>
+    <ion-title>Scrivi recensione</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
     <ion-item>
-      <ion-label position="stacked">Rating</ion-label>
+      <ion-label position="stacked">Valutazione</ion-label>
       <div class="star-row">
         <ion-icon
           *ngFor="let star of [1,2,3,4,5]"
@@ -23,18 +23,18 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="stacked">Comment</ion-label>
+      <ion-label position="stacked">Commento</ion-label>
       <ion-textarea
         [(ngModel)]="comment"
         rows="4"
-        placeholder="Share your experience..."
+        placeholder="Condividi la tua esperienza..."
       ></ion-textarea>
     </ion-item>
   </ion-list>
 
   <div class="ion-padding">
     <ion-button expand="block" (click)="submit()" [disabled]="rating === 0">
-      Submit Review
+      Invia recensione
     </ion-button>
   </div>
 </ion-content>

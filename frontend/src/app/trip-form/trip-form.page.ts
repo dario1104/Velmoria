@@ -37,6 +37,6 @@ export class TripFormPage implements OnInit {
       ? this.tripsService.update(this.tripId, { title: this.title, description: this.description })
       : this.tripsService.create(this.title, this.description || undefined);
 
-    obs.subscribe(() => this.router.navigate(['/trips']));
+    obs.subscribe(trip => this.router.navigate(['/trip-detail', trip.id], { queryParams: { startTracking: 'true' } }));
   }
 }

@@ -5,7 +5,8 @@
 </ion-header>
 
 <ion-content>
-  <div class="profile-header">
+  <div class="profile-header slide-up">
+    <div class="avatar-glow"></div>
     <div class="avatar">
       <ion-icon name="person-outline"></ion-icon>
     </div>
@@ -13,21 +14,7 @@
     <p>{{ user?.email }}</p>
   </div>
 
-  <div class="menu-card">
-    <div class="menu-item" routerLink="/trips">
-      <div class="menu-icon" style="background: rgba(124,77,255,0.1)">
-        <ion-icon name="map-outline" style="color: #7c4dff"></ion-icon>
-      </div>
-      <span>I miei viaggi</span>
-      <ion-icon name="chevron-forward" class="arrow"></ion-icon>
-    </div>
-    <div class="menu-item" routerLink="/trip-form">
-      <div class="menu-icon" style="background: rgba(252,11,123,0.1)">
-        <ion-icon name="add-circle-outline" style="color: #fc0b7b"></ion-icon>
-      </div>
-      <span>Nuovo viaggio</span>
-      <ion-icon name="chevron-forward" class="arrow"></ion-icon>
-    </div>
+  <div class="menu-card fade-in">
     <div class="menu-item" routerLink="/edit-profile">
       <div class="menu-icon" style="background: rgba(0,200,83,0.1)">
         <ion-icon name="person-outline" style="color: #00c853"></ion-icon>
@@ -35,11 +22,11 @@
       <span>Modifica profilo</span>
       <ion-icon name="chevron-forward" class="arrow"></ion-icon>
     </div>
-    <div class="menu-item" routerLink="/settings">
+    <div class="menu-item" routerLink="/change-password">
       <div class="menu-icon" style="background: rgba(255,171,0,0.1)">
-        <ion-icon name="settings-outline" style="color: #ffab00"></ion-icon>
+        <ion-icon name="lock-closed-outline" style="color: #ffab00"></ion-icon>
       </div>
-      <span>Impostazioni</span>
+      <span>Cambia password</span>
       <ion-icon name="chevron-forward" class="arrow"></ion-icon>
     </div>
     <div class="menu-item" routerLink="/badges">
@@ -49,32 +36,32 @@
       <span>Badge e achievement</span>
       <ion-icon name="chevron-forward" class="arrow"></ion-icon>
     </div>
-    <div class="menu-item" routerLink="/friends">
-      <div class="menu-icon" style="background: rgba(33,150,243,0.1)">
-        <ion-icon name="people-outline" style="color: #2196f3"></ion-icon>
+    <div class="menu-item" routerLink="/settings">
+      <div class="menu-icon" style="background: rgba(255,171,0,0.1)">
+        <ion-icon name="settings-outline" style="color: #ffab00"></ion-icon>
       </div>
-      <span>Amici</span>
+      <span>Impostazioni</span>
       <ion-icon name="chevron-forward" class="arrow"></ion-icon>
     </div>
-    <div class="menu-item" routerLink="/explore">
-      <div class="menu-icon" style="background: rgba(0,188,212,0.1)">
-        <ion-icon name="compass-outline" style="color: #00bcd4"></ion-icon>
-      </div>
-      <span>Esplora</span>
-      <ion-icon name="chevron-forward" class="arrow"></ion-icon>
-    </div>
-    <div class="menu-item" routerLink="/wishlist">
-      <div class="menu-icon" style="background: rgba(255,152,0,0.1)">
-        <ion-icon name="heart-outline" style="color: #ff9800"></ion-icon>
-      </div>
-      <span>Wishlist</span>
-      <ion-icon name="chevron-forward" class="arrow"></ion-icon>
-    </div>
-    <div class="menu-item" routerLink="/notifications">
+    <div class="menu-item" routerLink="/privacy-settings">
       <div class="menu-icon" style="background: rgba(156,39,176,0.1)">
-        <ion-icon name="notifications-outline" style="color: #9c27b0"></ion-icon>
+        <ion-icon name="shield-checkmark-outline" style="color: #9c27b0"></ion-icon>
       </div>
-      <span>Notifiche</span>
+      <span>Privacy</span>
+      <ion-icon name="chevron-forward" class="arrow"></ion-icon>
+    </div>
+    <div class="menu-item" routerLink="/device-management">
+      <div class="menu-icon" style="background: rgba(33,150,243,0.1)">
+        <ion-icon name="laptop-outline" style="color: #2196f3"></ion-icon>
+      </div>
+      <span>Dispositivi e sessioni</span>
+      <ion-icon name="chevron-forward" class="arrow"></ion-icon>
+    </div>
+    <div class="menu-item" routerLink="/import-export">
+      <div class="menu-icon" style="background: rgba(0,188,212,0.1)">
+        <ion-icon name="cloud-download-outline" style="color: #00bcd4"></ion-icon>
+      </div>
+      <span>Importa / Esporta dati</span>
       <ion-icon name="chevron-forward" class="arrow"></ion-icon>
     </div>
   </div>

@@ -1,32 +1,32 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Privacy Settings</ion-title>
+    <ion-title>Impostazioni privacy</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
     <ion-item>
-      <ion-label>Profile visibility</ion-label>
+      <ion-label>Visibilità profilo</ion-label>
       <ion-select [(ngModel)]="profileVisibility">
-        <ion-select-option value="public">Public</ion-select-option>
-        <ion-select-option value="followers">Followers only</ion-select-option>
-        <ion-select-option value="private">Private</ion-select-option>
+        <ion-select-option value="public">Pubblico</ion-select-option>
+        <ion-select-option value="followers">Solo follower</ion-select-option>
+        <ion-select-option value="private">Privato</ion-select-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
-      <ion-label>Show email on profile</ion-label>
+      <ion-label>Mostra email sul profilo</ion-label>
       <ion-toggle [(ngModel)]="showEmail"></ion-toggle>
     </ion-item>
 
     <ion-item>
-      <ion-label>Show location on trips</ion-label>
+      <ion-label>Mostra posizione nei viaggi</ion-label>
       <ion-toggle [(ngModel)]="showLocation"></ion-toggle>
     </ion-item>
 
     <ion-item>
-      <ion-label>Allow data collection</ion-label>
+      <ion-label>Consenti raccolta dati</ion-label>
       <ion-toggle [(ngModel)]="dataCollection"></ion-toggle>
     </ion-item>
   </ion-list>

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>User Search</ion-title>
+    <ion-title>Cerca utenti</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,7 +8,7 @@
   <ion-searchbar
     [(ngModel)]="searchQuery"
     (ionInput)="search()"
-    placeholder="Search users"
+    placeholder="Cerca utenti"
     debounce="300"
   ></ion-searchbar>
 
@@ -18,23 +18,23 @@
         <img [src]="user.avatar || 'assets/default-avatar.png'" alt="" />
       </ion-avatar>
       <ion-label>
-        <h2>{{ user.name || 'Unknown' }}</h2>
+        <h2>{{ user.name || 'Sconosciuto' }}</h2>
         <p>{{ user.email }}</p>
       </ion-label>
       <ion-buttons slot="end">
         <ion-button color="primary" (click)="sendRequest(user.id)">
-          Add
+          Aggiungi
         </ion-button>
       </ion-buttons>
     </ion-item>
   </ion-list>
 
   <ion-item *ngIf="loading">
-    <ion-label>Searching...</ion-label>
+    <ion-label>Ricerca...</ion-label>
   </ion-item>
 
   <ion-item *ngIf="searched && results.length === 0 && !loading && !error">
-    <ion-label>No users found</ion-label>
+    <ion-label>Nessun utente trovato</ion-label>
   </ion-item>
 
   <ion-item *ngIf="error">

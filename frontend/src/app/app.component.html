@@ -1,3 +1,67 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu contentId="main-content" side="start" menuId="main">
+    <ion-header>
+      <ion-toolbar class="menu-header">
+        <div class="menu-brand">
+          <div class="menu-logo">
+            <img src="assets/logo.png" alt="Velmoria" />
+          </div>
+          <span class="menu-title gradient-text">Velmoria</span>
+        </div>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <div class="menu-section-label">Navigazione</div>
+      <ion-item button routerLink="/tabs/dashboard" (click)="closeMenu()">
+        <ion-icon name="home-outline" slot="start"></ion-icon>
+        <ion-label>Home</ion-label>
+      </ion-item>
+      <ion-item button routerLink="/trips" (click)="closeMenu()">
+        <ion-icon name="map-outline" slot="start"></ion-icon>
+        <ion-label>Storico viaggi</ion-label>
+      </ion-item>
+      <ion-item button routerLink="/map" (click)="closeMenu()">
+        <ion-icon name="compass-outline" slot="start"></ion-icon>
+        <ion-label>Mappa</ion-label>
+      </ion-item>
+      <ion-item button routerLink="/explore" (click)="closeMenu()">
+        <ion-icon name="globe-outline" slot="start"></ion-icon>
+        <ion-label>Esplora</ion-label>
+      </ion-item>
+      <ion-item button routerLink="/trip-form" (click)="closeMenu()">
+        <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+        <ion-label>Nuovo viaggio</ion-label>
+      </ion-item>
+
+      <div class="menu-section-label">Social</div>
+      <ion-item button routerLink="/friends" (click)="closeMenu()">
+        <ion-icon name="people-outline" slot="start"></ion-icon>
+        <ion-label>Amici</ion-label>
+      </ion-item>
+      <ion-item button routerLink="/chat" (click)="closeMenu()">
+        <ion-icon name="chatbubbles-outline" slot="start"></ion-icon>
+        <ion-label>Chat</ion-label>
+      </ion-item>
+      <ion-item button routerLink="/notifications" (click)="closeMenu()">
+        <ion-icon name="notifications-outline" slot="start"></ion-icon>
+        <ion-label>Notifiche</ion-label>
+      </ion-item>
+      <ion-item button routerLink="/wishlist" (click)="closeMenu()">
+        <ion-icon name="heart-outline" slot="start"></ion-icon>
+        <ion-label>Wishlist</ion-label>
+      </ion-item>
+
+      <div class="menu-section-label">Account</div>
+      <ion-item button routerLink="/profile" (click)="closeMenu()">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-label>Profilo</ion-label>
+      </ion-item>
+      <ion-item button routerLink="/settings" (click)="closeMenu()">
+        <ion-icon name="settings-outline" slot="start"></ion-icon>
+        <ion-label>Impostazioni</ion-label>
+      </ion-item>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>

@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Devices & Sessions</ion-title>
+    <ion-title>Dispositivi e sessioni</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -10,7 +10,7 @@
       <ion-icon name="desktop-outline" slot="start" *ngIf="!device.name.includes('iPhone')"></ion-icon>
       <ion-icon name="phone-portrait-outline" slot="start" *ngIf="device.name.includes('iPhone')"></ion-icon>
       <ion-label>
-        <h2>{{ device.name }} <span *ngIf="device.current" style="color: var(--ion-color-primary); font-size: 0.8em;">(current)</span></h2>
+        <h2>{{ device.name }} <span *ngIf="device.current" style="color: var(--ion-color-primary); font-size: 0.8em;">(corrente)</span></h2>
         <p>{{ device.browser }} · {{ device.lastActive }}</p>
       </ion-label>
     </ion-item>

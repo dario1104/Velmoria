@@ -1,21 +1,21 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Settings</ion-title>
+    <ion-title>Impostazioni</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
     <ion-item>
-      <ion-label>Theme</ion-label>
+      <ion-label>Tema</ion-label>
       <ion-select [value]="settings.theme" (ionChange)="onThemeChange($event.detail.value)">
-        <ion-select-option value="light">Light</ion-select-option>
-        <ion-select-option value="dark">Dark</ion-select-option>
+        <ion-select-option value="light">Chiaro</ion-select-option>
+        <ion-select-option value="dark">Scuro</ion-select-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
-      <ion-label>Language</ion-label>
+      <ion-label>Lingua</ion-label>
       <ion-select [value]="settings.language" (ionChange)="onLanguageChange($event.detail.value)">
         <ion-select-option value="it">Italiano</ion-select-option>
         <ion-select-option value="en">English</ion-select-option>
@@ -23,17 +23,17 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Push notifications</ion-label>
+      <ion-label>Notifiche push</ion-label>
       <ion-toggle [checked]="settings.notifications?.push" (ionChange)="onNotificationChange('push', $event.detail.checked)"></ion-toggle>
     </ion-item>
 
     <ion-item>
-      <ion-label>Email notifications</ion-label>
+      <ion-label>Notifiche email</ion-label>
       <ion-toggle [checked]="settings.notifications?.email" (ionChange)="onNotificationChange('email', $event.detail.checked)"></ion-toggle>
     </ion-item>
 
     <ion-item>
-      <ion-label>SMS notifications</ion-label>
+      <ion-label>Notifiche SMS</ion-label>
       <ion-toggle [checked]="settings.notifications?.sms" (ionChange)="onNotificationChange('sms', $event.detail.checked)"></ion-toggle>
     </ion-item>
   </ion-list>

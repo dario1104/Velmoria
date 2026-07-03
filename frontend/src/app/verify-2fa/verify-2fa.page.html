@@ -1,0 +1,32 @@
+<ion-content [scrollY]="false">
+  <div id="wrapper">
+    <div id="brand">
+      <img id="logo" src="assets/logo.png" alt="Velmoria" />
+      <h1>Verifica in due passaggi</h1>
+      <p>Inserisci il codice inviato a<br><strong>{{ email }}</strong></p>
+    </div>
+
+    <div id="form">
+      <ion-item>
+        <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
+        <ion-input
+          placeholder="000000"
+          [(ngModel)]="codice"
+          maxlength="6"
+          inputmode="numeric"
+          (keyup.enter)="verifica()"
+        ></ion-input>
+      </ion-item>
+
+      <ion-note color="danger" *ngIf="error" class="ion-padding-start">{{ error }}</ion-note>
+
+      <ion-button expand="block" (click)="verifica()">
+        Verifica codice
+      </ion-button>
+    </div>
+
+    <div id="footer">
+      <a routerLink="/login">Torna al login</a>
+    </div>
+  </div>
+</ion-content>

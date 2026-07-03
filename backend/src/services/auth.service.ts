@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { AppError } from '../middleware/errorHandler';
 
 export class AuthService {
-  async register(email: string, password: string, name?: string) {
+  async register(email: string, password: string, name: string, bio?: string, phone?: string) {
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) {
       throw new AppError(409, 'Email già registrata');
@@ -12,17 +12,17 @@ export class AuthService {
 
     const hashed = await bcrypt.hash(password, 12);
     const user = await prisma.user.create({
-      data: { email, password: hashed, name },
+      data: { email, password: hashed, name, bio, phone },
     });
 
     const tokens = this.generateTokens(user.id, user.email);
     return {
-      user: { id: user.id, email: user.email, name: user.name },
+      user: { id: user.id, email: user.email, name: user.name, bio: user.bio, phone: user.phone },
       ...tokens,
     };
   }
 
-  async login(email: string, password: string) {
+  async verifyCredentials(email: string, password: string) {
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
       throw new AppError(401, 'Credenziali non valide');
@@ -33,11 +33,28 @@ export class AuthService {
       throw new AppError(401, 'Credenziali non valide');
     }
 
+    return { id: user.id, email: user.email, name: user.name };
+  }
+
+  async completeLogin(userId: string) {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      throw new AppError(401, 'Utente non trovato');
+    }
     const tokens = this.generateTokens(user.id, user.email);
     return {
-      user: { id: user.id, email: user.email, name: user.name },
+      user: { id: user.id, email: user.email, name: user.name, avatarUrl: user.avatarUrl, bio: user.bio, phone: user.phone },
       ...tokens,
     };
+  }
+
+  async getProfile(userId: string) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true, email: true, name: true, avatarUrl: true, bio: true, phone: true, createdAt: true },
+    });
+    if (!user) throw new AppError(404, 'Utente non trovato');
+    return user;
   }
 
   async refresh(token: string) {

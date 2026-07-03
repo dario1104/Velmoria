@@ -41,6 +41,7 @@ model User {
   transportLogs  TransportLog[]
   settings       UserSettings?
   visitedPlaces  VisitedPlace[]
+  codiciVerifica CodiceVerifica[]
   offlineQueue   OfflineQueue[]
 
   @@map("users")
@@ -413,6 +414,21 @@ model VisitedPlace {
   @@index([userId])
   @@index([tripId])
   @@map("visited_places")
+}
+
+model CodiceVerifica {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  codice    String
+  tipo      String   @default("2fa_login") @db.VarChar(50)
+  scadenza  DateTime
+  usato     Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, tipo])
+  @@map("codici_verifica")
 }
 
 model OfflineQueue {

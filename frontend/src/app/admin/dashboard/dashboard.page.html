@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Admin Dashboard</ion-title>
+    <ion-title>Pannello Admin</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,7 +11,7 @@
         <ion-card>
           <ion-card-content class="ion-text-center">
             <h1>{{ stats.totalUsers }}</h1>
-            <p>Users</p>
+            <p>Utenti</p>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -19,7 +19,7 @@
         <ion-card>
           <ion-card-content class="ion-text-center">
             <h1>{{ stats.totalTrips }}</h1>
-            <p>Trips</p>
+            <p>Viaggi</p>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -29,7 +29,7 @@
         <ion-card>
           <ion-card-content class="ion-text-center">
             <h1>{{ stats.reports }}</h1>
-            <p>Reports</p>
+            <p>Segnalazioni</p>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -37,7 +37,7 @@
         <ion-card>
           <ion-card-content class="ion-text-center">
             <h1>{{ stats.activeSessions }}</h1>
-            <p>Active sessions</p>
+            <p>Sessioni attive</p>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -46,12 +46,12 @@
 
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Quick actions</ion-card-title>
+      <ion-card-title>Azioni rapide</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-button expand="block" (click)="goToUsers()">
         <ion-icon name="people-outline" slot="start"></ion-icon>
-        Manage users
+        Gestisci utenti
       </ion-button>
     </ion-card-content>
   </ion-card>

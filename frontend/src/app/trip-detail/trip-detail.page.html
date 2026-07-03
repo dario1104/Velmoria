@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button text="Indietro"></ion-back-button>
     </ion-buttons>
     <ion-title>Dettaglio</ion-title>
     <ion-buttons slot="end">
@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content>
-  <div class="hero-card" *ngIf="trip">
+  <div class="hero-card slide-up" *ngIf="trip">
     <div class="hero-gradient"></div>
     <div class="hero-content">
       <div class="hero-top">
@@ -31,12 +31,11 @@
     </div>
   </div>
 
-  <div class="stats-card" *ngIf="stats">
+  <div class="stats-card fade-in" *ngIf="stats" style="animation-delay: 0.1s">
     <h3>Statistiche</h3>
     <div class="stats-row">
       <div class="stat-item">
         <span class="stat-num">{{ stats.totalDistance }}</span>
-        <span class="stat-unit">km</span>
         <span class="stat-label">Distanza</span>
       </div>
       <div class="stat-divider"></div>
@@ -52,39 +51,39 @@
     </div>
   </div>
 
-  <div class="section-card">
+  <div class="section-card fade-in" style="animation-delay: 0.15s">
     <h3>Sezioni viaggio</h3>
     <div class="menu-row" routerLink="/itinerary/{{ trip?.id }}">
       <ion-icon name="journal-outline"></ion-icon><span>Diario di viaggio</span>
-      <ion-icon name="chevron-forward" slot="end" class="arrow"></ion-icon>
+      <ion-icon name="chevron-forward" class="arrow"></ion-icon>
     </div>
     <div class="menu-row" routerLink="/gallery/{{ trip?.id }}">
       <ion-icon name="images-outline"></ion-icon><span>Galleria</span>
-      <ion-icon name="chevron-forward" slot="end" class="arrow"></ion-icon>
+      <ion-icon name="chevron-forward" class="arrow"></ion-icon>
     </div>
     <div class="menu-row" routerLink="/expenses/{{ trip?.id }}">
       <ion-icon name="wallet-outline"></ion-icon><span>Spese</span>
-      <ion-icon name="chevron-forward" slot="end" class="arrow"></ion-icon>
+      <ion-icon name="chevron-forward" class="arrow"></ion-icon>
     </div>
     <div class="menu-row" routerLink="/packing/{{ trip?.id }}">
       <ion-icon name="bag-check-outline"></ion-icon><span>Packing list</span>
-      <ion-icon name="chevron-forward" slot="end" class="arrow"></ion-icon>
+      <ion-icon name="chevron-forward" class="arrow"></ion-icon>
     </div>
     <div class="menu-row" routerLink="/activities/{{ trip?.id }}">
       <ion-icon name="time-outline"></ion-icon><span>Attività</span>
-      <ion-icon name="chevron-forward" slot="end" class="arrow"></ion-icon>
+      <ion-icon name="chevron-forward" class="arrow"></ion-icon>
     </div>
     <div class="menu-row" routerLink="/replay/{{ trip?.id }}">
       <ion-icon name="play-outline"></ion-icon><span>Replay percorso</span>
-      <ion-icon name="chevron-forward" slot="end" class="arrow"></ion-icon>
+      <ion-icon name="chevron-forward" class="arrow"></ion-icon>
     </div>
     <div class="menu-row" routerLink="/stats/{{ trip?.id }}">
       <ion-icon name="bar-chart-outline"></ion-icon><span>Statistiche</span>
-      <ion-icon name="chevron-forward" slot="end" class="arrow"></ion-icon>
+      <ion-icon name="chevron-forward" class="arrow"></ion-icon>
     </div>
   </div>
 
-  <div class="section-card">
+  <div class="section-card fade-in" style="animation-delay: 0.2s">
     <h3>Marker <span class="count">({{ markers.length }})</span></h3>
     <div *ngIf="markers.length === 0" class="empty-inline">
       <p>Nessun marker aggiunto</p>
@@ -103,7 +102,7 @@
     </div>
   </div>
 
-  <div class="ion-padding actions">
+  <div class="ion-padding actions fade-in" style="animation-delay: 0.25s">
     <ion-button expand="block" (click)="toggleTracking()" *ngIf="trip?.isActive" [color]="tracking ? 'danger' : 'primary'">
       <ion-icon slot="start" [name]="tracking ? 'stop-outline' : 'navigate-outline'"></ion-icon>
       {{ tracking ? 'Ferma tracking' : 'Avvia tracking GPS' }}

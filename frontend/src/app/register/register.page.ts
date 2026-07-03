@@ -11,6 +11,8 @@ import { AuthService } from '../services/auth.service';
 export class RegisterPage {
   name = '';
   email = '';
+  phone = '';
+  bio = '';
   password = '';
   confirmPassword = '';
   error = '';
@@ -36,7 +38,7 @@ export class RegisterPage {
       return;
     }
     this.auth.register(this.email, this.password, this.name).subscribe({
-      next: () => this.router.navigate(['/trips']),
+      next: () => this.router.navigate(['/tabs/dashboard']),
       error: (err) => {
         this.error = err.error?.error || 'Errore di connessione';
       },
