@@ -1,8 +1,9 @@
 {
-  "name": "velmora-backend",
+  "name": "velmoria-backend",
   "version": "0.2.0",
-  "description": "Velmora API backend - travel diary platform",
+  "description": "Velmoria API backend - travel diary platform",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "start": "node dist/server.js",

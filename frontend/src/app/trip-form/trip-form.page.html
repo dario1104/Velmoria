@@ -1,0 +1,36 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ isEditing ? 'Modifica' : 'Nuovo' }} viaggio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="form-card">
+    <div class="form-card-header">
+      <div class="form-icon">
+        <ion-icon [name]="isEditing ? 'pencil-outline' : 'map-outline'"></ion-icon>
+      </div>
+      <h2>{{ isEditing ? 'Modifica viaggio' : 'Crea un nuovo viaggio' }}</h2>
+      <p>Compila i dettagli del viaggio</p>
+    </div>
+
+    <ion-item>
+      <ion-icon name="text-outline" slot="start"></ion-icon>
+      <ion-label position="floating">Titolo</ion-label>
+      <ion-input [(ngModel)]="title"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="document-text-outline" slot="start"></ion-icon>
+      <ion-label position="floating">Descrizione (opzionale)</ion-label>
+      <ion-textarea [(ngModel)]="description" rows="4"></ion-textarea>
+    </ion-item>
+
+    <ion-button expand="block" (click)="save()">
+      <ion-icon [name]="isEditing ? 'checkmark-outline' : 'add-outline'" slot="start"></ion-icon>
+      {{ isEditing ? 'Salva modifiche' : 'Crea viaggio' }}
+    </ion-button>
+  </div>
+</ion-content>

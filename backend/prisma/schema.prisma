@@ -7,14 +7,42 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique @db.VarChar(255)
-  password  String   @db.VarChar(255)
-  name      String?  @db.VarChar(100)
-  avatarUrl String?  @map("avatar_url")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  trips     Trip[]
+  id             String           @id @default(uuid())
+  email          String           @unique @db.VarChar(255)
+  password       String           @db.VarChar(255)
+  name           String           @db.VarChar(100)
+  avatarUrl      String?          @map("avatar_url")
+  bio            String?          @db.Text
+  phone          String?          @db.VarChar(30)
+  preferences    Json?            @default("{}") @db.JsonB
+  createdAt      DateTime         @default(now()) @map("created_at")
+  updatedAt      DateTime         @updatedAt @map("updated_at")
+
+  trips          Trip[]
+  tripMembers    TripMember[]
+  gpsPoints      GpsPoint[]
+  markers        Marker[]
+  media          Media[]
+  diaryEntries   DiaryEntry[]
+  timelineEvents TimelineEvent[]
+
+  sentRequests   FriendRequest[]  @relation("SentRequests")
+  receivedRequests FriendRequest[] @relation("ReceivedRequests")
+  friends        Friend[]         @relation("UserFriends")
+  friendsOf      Friend[]         @relation("UserFriendsOf")
+
+  sentInvites    TripInvite[]     @relation("SentInvites")
+  receivedInvites TripInvite[]    @relation("ReceivedInvites")
+
+  wishlistTrips  WishlistTrip[]
+  calendarEvents CalendarEvent[]
+  notifications  Notification[]
+  achievements   UserAchievement[]
+  transportLogs  TransportLog[]
+  settings       UserSettings?
+  visitedPlaces  VisitedPlace[]
+  offlineQueue   OfflineQueue[]
+
   @@map("users")
 }
 
@@ -23,56 +51,400 @@ model Trip {
   userId      String    @map("user_id")
   title       String    @db.VarChar(200)
   description String?   @db.Text
+  coverPhoto  String?   @map("cover_photo")
   startDate   DateTime  @map("start_date")
   endDate     DateTime? @map("end_date")
   isActive    Boolean   @default(true) @map("is_active")
+  isPublic    Boolean   @default(false) @map("is_public")
+  countries   String[]  @default([]) @db.VarChar(100)
+  cities      String[]  @default([]) @db.VarChar(200)
+  totalDistance Float?  @map("total_distance")
+  totalTime   Int?      @map("total_time")
+  maxSpeed    Float?    @map("max_speed")
+  avgSpeed    Float?    @map("avg_speed")
   createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  members     TripMember[]
   points      GpsPoint[]
   markers     Marker[]
+  diaryEntries DiaryEntry[]
+  timelineEvents TimelineEvent[]
+  calendarEvents CalendarEvent[]
+  transportLogs TransportLog[]
+  tripInvites   TripInvite[]
+
+  @@index([userId])
   @@map("trips")
+}
+
+model TripMember {
+  id        String   @id @default(uuid())
+  tripId    String   @map("trip_id")
+  userId    String   @map("user_id")
+  role      String   @default("member") @db.VarChar(20)
+  color     String   @default("#7c4dff") @db.VarChar(7)
+  joinedAt  DateTime @default(now()) @map("joined_at")
+
+  trip      Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([tripId, userId])
+  @@index([tripId])
+  @@index([userId])
+  @@map("trip_members")
 }
 
 model GpsPoint {
   id        String   @id @default(uuid())
   tripId    String   @map("trip_id")
+  userId    String?  @map("user_id")
   latitude  Float
   longitude Float
   timestamp DateTime
   speed     Float?
   accuracy  Float?
   altitude  Float?
+  bearing   Float?
+  isMoving  Boolean  @default(true) @map("is_moving")
+
   trip      Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  user      User?    @relation(fields: [userId], references: [id])
+
   @@index([tripId])
   @@index([tripId, timestamp])
+  @@index([userId])
   @@map("gps_points")
 }
 
 model Marker {
-  id        String   @id @default(uuid())
-  tripId    String   @map("trip_id")
-  latitude  Float
-  longitude Float
-  type      String   @db.VarChar(20)
-  content   String?  @db.Text
-  mood      String?  @db.VarChar(50)
-  createdAt DateTime @default(now()) @map("created_at")
-  trip      Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
-  media     Media[]
+  id          String   @id @default(uuid())
+  tripId      String   @map("trip_id")
+  userId      String   @map("user_id")
+  latitude    Float
+  longitude   Float
+  type        String   @db.VarChar(50)
+  category    String?  @db.VarChar(50)
+  content     String?  @db.Text
+  mood        String?  @db.VarChar(50)
+  rating      Int?     @default(0)
+  address     String?  @db.VarChar(500)
+  placeName   String?  @db.VarChar(200) @map("place_name")
+  placeId     String?  @map("place_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  trip        Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id])
+  media       Media[]
+
   @@index([tripId])
+  @@index([userId])
   @@index([type])
+  @@index([category])
   @@map("markers")
 }
 
 model Media {
+  id          String   @id @default(uuid())
+  markerId    String   @map("marker_id")
+  userId      String?  @map("user_id")
+  fileUrl     String   @map("file_url")
+  fileType    String   @db.VarChar(50) @map("file_type")
+  fileSize    Int?     @map("file_size")
+  thumbnail   String?  @db.VarChar(500)
+  width       Int?
+  height      Int?
+  duration    Float?
+  metadata    Json?    @default("{}") @db.JsonB
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  marker      Marker   @relation(fields: [markerId], references: [id], onDelete: Cascade)
+  user        User?    @relation(fields: [userId], references: [id])
+
+  @@index([markerId])
+  @@index([userId])
+  @@map("media")
+}
+
+model DiaryEntry {
   id        String   @id @default(uuid())
-  markerId  String   @map("marker_id")
-  fileUrl   String   @map("file_url")
-  fileType  String   @db.VarChar(50) @map("file_type")
-  fileSize  Int?     @map("file_size")
+  tripId    String   @map("trip_id")
+  userId    String   @map("user_id")
+  date      DateTime
+  title     String?  @db.VarChar(200)
+  content   String?  @db.Text
+  mood      String?  @db.VarChar(50)
+  weather   String?  @db.VarChar(50)
+  isAuto    Boolean  @default(false) @map("is_auto")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  trip      Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([tripId, userId, date])
+  @@index([tripId])
+  @@index([userId])
+  @@map("diary_entries")
+}
+
+model TimelineEvent {
+  id        String   @id @default(uuid())
+  tripId    String   @map("trip_id")
+  userId    String   @map("user_id")
+  type      String   @db.VarChar(50)
+  title     String   @db.VarChar(200)
+  content   String?  @db.Text
+  latitude  Float?
+  longitude Float?
+  timestamp DateTime
   metadata  Json?    @default("{}") @db.JsonB
   createdAt DateTime @default(now()) @map("created_at")
-  marker    Marker   @relation(fields: [markerId], references: [id], onDelete: Cascade)
-  @@index([markerId])
-  @@map("media")
+
+  trip      Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([tripId, timestamp])
+  @@index([userId])
+  @@map("timeline_events")
+}
+
+model WishlistTrip {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  title       String   @db.VarChar(200)
+  description String?  @db.Text
+  destination String   @db.VarChar(300)
+  latitude    Float?
+  longitude   Float?
+  startDate   DateTime? @map("start_date")
+  endDate     DateTime? @map("end_date")
+  budget      Float?
+  priority    Int      @default(0)
+  isCompleted Boolean  @default(false) @map("is_completed")
+  notes       String?  @db.Text
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("wishlist_trips")
+}
+
+model CalendarEvent {
+  id          String   @id @default(uuid())
+  tripId      String?  @map("trip_id")
+  userId      String   @map("user_id")
+  title       String   @db.VarChar(200)
+  description String?  @db.Text
+  location    String?  @db.VarChar(300)
+  latitude    Float?
+  longitude   Float?
+  startTime   DateTime @map("start_time")
+  endTime     DateTime? @map("end_time")
+  isAllDay    Boolean  @default(false) @map("is_all_day")
+  category    String?  @db.VarChar(50)
+  color       String   @default("#7c4dff") @db.VarChar(7)
+  isDone      Boolean  @default(false) @map("is_done")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  trip        Trip?    @relation(fields: [tripId], references: [id])
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([tripId])
+  @@index([startTime, endTime])
+  @@map("calendar_events")
+}
+
+model PointOfInterest {
+  id          String   @id @default(uuid())
+  name        String   @db.VarChar(300)
+  description String?  @db.Text
+  latitude    Float
+  longitude   Float
+  category    String   @db.VarChar(50)
+  subcategory String?  @db.VarChar(50)
+  address     String?  @db.VarChar(500)
+  imageUrl    String?  @map("image_url")
+  website     String?  @db.VarChar(500)
+  phone       String?  @db.VarChar(30)
+  rating      Float?   @default(0)
+  priceLevel  Int?     @default(0) @map("price_level")
+  openingHours Json?   @map("opening_hours") @db.JsonB
+  tags        String[] @default([]) @db.VarChar(100)
+  source      String   @default("manual") @db.VarChar(20)
+  placeId     String?  @map("place_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@index([latitude, longitude])
+  @@index([category])
+  @@index([tags])
+  @@map("points_of_interest")
+}
+
+model FriendRequest {
+  id        String   @id @default(uuid())
+  senderId   String   @map("sender_id")
+  receiverId String   @map("receiver_id")
+  status    String   @default("pending") @db.VarChar(20)
+  message   String?  @db.VarChar(500)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  sender    User     @relation("SentRequests", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver  User     @relation("ReceivedRequests", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@unique([senderId, receiverId])
+  @@index([senderId])
+  @@index([receiverId])
+  @@map("friend_requests")
+}
+
+model Friend {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  friendId  String   @map("friend_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user      User     @relation("UserFriends", fields: [userId], references: [id], onDelete: Cascade)
+  friend    User     @relation("UserFriendsOf", fields: [friendId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, friendId])
+  @@index([userId])
+  @@index([friendId])
+  @@map("friends")
+}
+
+model TripInvite {
+  id        String   @id @default(uuid())
+  tripId    String   @map("trip_id")
+  senderId   String   @map("sender_id")
+  receiverId String   @map("receiver_id")
+  status    String   @default("pending") @db.VarChar(20)
+  message   String?  @db.VarChar(500)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  trip      Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  sender    User     @relation("SentInvites", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver  User     @relation("ReceivedInvites", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@unique([tripId, receiverId])
+  @@index([senderId])
+  @@index([receiverId])
+  @@map("trip_invites")
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  type      String   @db.VarChar(50)
+  title     String   @db.VarChar(200)
+  body      String?  @db.Text
+  data      Json?    @default("{}") @db.JsonB
+  isRead    Boolean  @default(false) @map("is_read")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@index([createdAt])
+  @@map("notifications")
+}
+
+model TransportLog {
+  id        String   @id @default(uuid())
+  tripId    String   @map("trip_id")
+  userId    String   @map("user_id")
+  type      String   @db.VarChar(30)
+  distance  Float
+  duration  Int
+  startTime DateTime @map("start_time")
+  endTime   DateTime? @map("end_time")
+  fromPlace String?  @db.VarChar(300) @map("from_place")
+  toPlace   String?  @db.VarChar(300) @map("to_place")
+  cost      Float?
+  notes     String?  @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+
+  trip      Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([tripId])
+  @@index([userId])
+  @@map("transport_logs")
+}
+
+model UserAchievement {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  badge     String   @db.VarChar(50)
+  title     String   @db.VarChar(200)
+  icon      String?  @db.VarChar(100)
+  unlockedAt DateTime @default(now()) @map("unlocked_at")
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, badge])
+  @@index([userId])
+  @@map("user_achievements")
+}
+
+model VisitedPlace {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  name      String   @db.VarChar(300)
+  latitude  Float
+  longitude Float
+  country   String?  @db.VarChar(100)
+  city      String?  @db.VarChar(200)
+  visitDate DateTime @map("visit_date")
+  tripId    String?  @map("trip_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([tripId])
+  @@map("visited_places")
+}
+
+model OfflineQueue {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  action    String   @db.VarChar(50)
+  payload   Json     @db.JsonB
+  status    String   @default("pending") @db.VarChar(20)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status])
+  @@map("offline_queue")
+}
+
+model UserSettings {
+  id        String   @id @default(uuid())
+  userId    String   @unique @map("user_id")
+  theme     String   @default("dark") @db.VarChar(20)
+  language  String   @default("it") @db.VarChar(10)
+  mapStyle  String   @default("dark") @db.VarChar(20)
+  unitSystem String  @default("metric") @db.VarChar(10) @map("unit_system")
+  offlineMode Boolean @default(false) @map("offline_mode")
+  autoSync  Boolean  @default(true) @map("auto_sync")
+  autoTrack Boolean  @default(true) @map("auto_track")
+  notifications Json? @default("{}") @db.JsonB
+  privacy   Json?    @default("{}") @db.JsonB
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_settings")
 }

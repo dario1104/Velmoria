@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Profilo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="profile-header">
+    <div class="avatar">
+      <ion-icon name="person-outline"></ion-icon>
+    </div>
+    <h2>{{ user?.name || 'Utente' }}</h2>
+    <p>{{ user?.email }}</p>
+  </div>
+
+  <div class="menu-card">
+    <div class="menu-item" routerLink="/trips">
+      <div class="menu-icon" style="background: rgba(124,77,255,0.1)">
+        <ion-icon name="map-outline" style="color: #7c4dff"></ion-icon>
+      </div>
+      <span>I miei viaggi</span>
+      <ion-icon name="chevron-forward" class="arrow"></ion-icon>
+    </div>
+    <div class="menu-item" routerLink="/trip-form">
+      <div class="menu-icon" style="background: rgba(252,11,123,0.1)">
+        <ion-icon name="add-circle-outline" style="color: #fc0b7b"></ion-icon>
+      </div>
+      <span>Nuovo viaggio</span>
+      <ion-icon name="chevron-forward" class="arrow"></ion-icon>
+    </div>
+  </div>
+
+  <div class="ion-padding">
+    <ion-button expand="block" fill="outline" color="danger" (click)="logout()">
+      <ion-icon name="log-out-outline" slot="start"></ion-icon>
+      Esci
+    </ion-button>
+  </div>
+</ion-content>

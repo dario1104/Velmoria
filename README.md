@@ -1,6 +1,6 @@
-# Velmora
+# Velmoria
 
-**Velmora** è una piattaforma cross-platform (mobile + web) per la creazione di un diario di viaggio geolocalizzato multimediale. Traccia percorsi GPS in tempo reale, registra ricordi con foto, video, audio e testo, e visualizza statistiche e replay dei tuoi viaggi su mappa interattiva.
+**Velmoria** è una piattaforma cross-platform (mobile + web) per la creazione di un diario di viaggio geolocalizzato multimediale. Traccia percorsi GPS in tempo reale, registra ricordi con foto, video, audio e testo, e visualizza statistiche e replay dei tuoi viaggi su mappa interattiva.
 
 ## Stack Tecnologico
 
@@ -18,7 +18,7 @@
 ## Struttura del Progetto
 
 ```
-velmora/
+velmoria/
 ├── backend/          # API NestJS/Express + Prisma
 ├── frontend/         # App Ionic Angular
 ├── docs/             # Documentazione

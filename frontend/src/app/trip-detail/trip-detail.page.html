@@ -1,0 +1,82 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Dettaglio</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="edit()">
+        <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="hero-card" *ngIf="trip">
+    <div class="hero-gradient"></div>
+    <div class="hero-content">
+      <div class="hero-top">
+        <h2>{{ trip.title }}</h2>
+        <ion-badge [color]="trip.isActive ? 'primary' : 'medium'">
+          {{ trip.isActive ? 'In corso' : 'Concluso' }}
+        </ion-badge>
+      </div>
+      <p class="hero-desc" *ngIf="trip.description">{{ trip.description }}</p>
+      <div class="hero-meta">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <span>{{ trip.startDate | date }}</span>
+        <span *ngIf="trip.endDate"> — {{ trip.endDate | date }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-card" *ngIf="stats">
+    <h3>Statistiche</h3>
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="stat-num">{{ stats.totalDistance }}</span>
+        <span class="stat-unit">km</span>
+        <span class="stat-label">Distanza</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">{{ formatTime(stats.totalTime) }}</span>
+        <span class="stat-label">Durata</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">{{ stats.markersCount }}</span>
+        <span class="stat-label">Marker</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <h3>Marker <span class="count">({{ markers.length }})</span></h3>
+    <div *ngIf="markers.length === 0" class="empty-inline">
+      <p>Nessun marker aggiunto</p>
+    </div>
+    <div *ngFor="let marker of markers; trackBy: trackByMarkerId" class="marker-row">
+      <div class="marker-badge">
+        <ion-icon [name]="markerIcon(marker.type)"></ion-icon>
+      </div>
+      <div class="marker-info">
+        <strong>{{ marker.type }}</strong>
+        <p *ngIf="marker.content || marker.mood">
+          {{ marker.content }}<span *ngIf="marker.mood"> · {{ marker.mood }}</span>
+        </p>
+      </div>
+      <ion-note>{{ marker.latitude }}, {{ marker.longitude }}</ion-note>
+    </div>
+  </div>
+
+  <div class="ion-padding actions">
+    <ion-button expand="block" color="danger" fill="outline" (click)="finish()" *ngIf="trip?.isActive">
+      Concludi viaggio
+    </ion-button>
+    <ion-button expand="block" fill="outline" color="medium" (click)="delete()" class="ion-margin-top">
+      Elimina viaggio
+    </ion-button>
+  </div>
+</ion-content>

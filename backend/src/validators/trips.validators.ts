@@ -31,3 +31,36 @@ export const tripIdValidator = [
     .isUUID()
     .withMessage('ID trip non valido'),
 ];
+
+export const addMemberValidator = [
+  param('id')
+    .isUUID()
+    .withMessage('ID trip non valido'),
+  body('userId')
+    .isUUID()
+    .withMessage('ID utente non valido'),
+  body('role')
+    .optional()
+    .isString()
+    .isIn(['member', 'viewer', 'editor'])
+    .withMessage('Ruolo non valido'),
+];
+
+export const updateMemberRoleValidator = [
+  param('id')
+    .isUUID()
+    .withMessage('ID trip non valido'),
+  param('memberId')
+    .isUUID()
+    .withMessage('ID membro non valido'),
+  body('role')
+    .isString()
+    .isIn(['member', 'viewer', 'editor', 'owner'])
+    .withMessage('Ruolo non valido'),
+];
+
+export const duplicateTripValidator = [
+  param('id')
+    .isUUID()
+    .withMessage('ID trip non valido'),
+];

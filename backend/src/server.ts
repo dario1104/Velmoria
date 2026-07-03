@@ -6,6 +6,6 @@ import app from './app';
 const PORT = parseInt(process.env.PORT || '3000', 10);
 
 app.listen(PORT, () => {
-  console.log(`Velmora API in esecuzione su http://localhost:${PORT}`);
+  console.log(`Velmoria API in esecuzione su http://localhost:${PORT}`);
   console.log(`Ambiente: ${process.env.NODE_ENV || 'development'}`);
 });

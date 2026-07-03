@@ -2,8 +2,12 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import routes from './routes/index';
 import { errorHandler } from './middleware/errorHandler';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 

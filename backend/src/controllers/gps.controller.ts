@@ -21,7 +21,7 @@ export async function createPoint(req: Request, res: Response, next: NextFunctio
   }
 
   try {
-    const point = await gpsService.createPoint(tripId, req.body);
+    const point = await gpsService.createPoint(tripId, { ...req.body, userId: req.user!.id });
     res.status(201).json(point);
   } catch (err) {
     next(err);
@@ -36,7 +36,8 @@ export async function createBatch(req: Request, res: Response, next: NextFunctio
   }
 
   try {
-    const result = await gpsService.createBatch(req.body.points);
+    const pointsWithUser = req.body.points.map((p: any) => ({ ...p, userId: req.user!.id }));
+    const result = await gpsService.createBatch(pointsWithUser);
     res.status(201).json({ count: result.count });
   } catch (err) {
     next(err);

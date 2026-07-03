@@ -1,4 +1,4 @@
-# Velmora — Todo List
+# Velmoria — Todo List
 
 ## Fase 1: Fondamenta (MVP)
 

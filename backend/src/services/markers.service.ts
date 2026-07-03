@@ -1,4 +1,5 @@
 import prisma from '../prisma/client';
+import { AppError } from '../middleware/errorHandler';
 
 export class MarkersService {
   async findByTrip(tripId: string) {
@@ -15,22 +16,30 @@ export class MarkersService {
       include: { media: true },
     });
     if (!marker) {
-      throw { statusCode: 404, message: 'Marker non trovato' };
+      throw new AppError(404, 'Marker non trovato');
     }
     return marker;
   }
 
   async create(
     tripId: string,
+    userId: string,
     data: {
       latitude: number;
       longitude: number;
       type: string;
+      category?: string;
       content?: string;
       mood?: string;
+      rating?: number;
+      address?: string;
+      placeName?: string;
+      placeId?: string;
     }
   ) {
-    return prisma.marker.create({ data: { tripId, ...data } });
+    return prisma.marker.create({
+      data: { tripId, userId, ...data },
+    });
   }
 
   async update(
@@ -39,8 +48,13 @@ export class MarkersService {
       latitude?: number;
       longitude?: number;
       type?: string;
+      category?: string;
       content?: string;
       mood?: string;
+      rating?: number;
+      address?: string;
+      placeName?: string;
+      placeId?: string;
     }
   ) {
     await this.findOne(id);

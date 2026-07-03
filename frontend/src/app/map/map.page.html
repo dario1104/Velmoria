@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Mappa</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="map-content">
+    <div class="map-icon-box">
+      <ion-icon name="compass-outline"></ion-icon>
+    </div>
+    <h3>Esplora i tuoi viaggi</h3>
+    <p>Seleziona un viaggio per vedere il percorso sulla mappa</p>
+
+    <ion-item>
+      <ion-icon name="map-outline" slot="start"></ion-icon>
+      <ion-label>Scegli un viaggio</ion-label>
+      <ion-select [(ngModel)]="selectedTripId" interface="action-sheet">
+        <ion-select-option value="">Seleziona...</ion-select-option>
+        <ion-select-option *ngFor="let t of trips" [value]="t.id">
+          {{ t.title }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button expand="block" (click)="openTrip()" [disabled]="!selectedTripId">
+      <ion-icon name="eye-outline" slot="start"></ion-icon>
+      Vedi percorso
+    </ion-button>
+  </div>
+</ion-content>

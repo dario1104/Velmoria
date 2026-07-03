@@ -25,6 +25,7 @@ Thumbs.db
 
 # Logs
 *.log
+*.err
 npm-debug.log*
 
 # Testing

@@ -1,20 +1,21 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <div id="hero">
+    <div id="hero-bg"></div>
+    <div id="hero-content">
+      <div id="logo-wrapper">
+        <img src="assets/logo.png" alt="Velmoria" id="logo" />
+      </div>
+      <h1>Velmoria</h1>
+      <p>Il tuo diario di viaggio intelligente</p>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+      <div id="actions">
+        <ion-button expand="block" routerLink="/login">
+          Accedi
+        </ion-button>
+        <ion-button expand="block" fill="outline" routerLink="/register">
+          Registrati
+        </ion-button>
+      </div>
+    </div>
   </div>
 </ion-content>

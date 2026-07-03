@@ -21,6 +21,12 @@ export function errorHandler(
     return;
   }
 
+  if (err && typeof err === 'object' && 'statusCode' in err && 'message' in err) {
+    const e = err as { statusCode: number; message: string };
+    res.status(e.statusCode).json({ error: e.message });
+    return;
+  }
+
   console.error('Errore non gestito:', err);
-  res.status(500).json({ error: 'Errore interno del server' });
+  res.status(500).json({ error: err instanceof Error ? err.message : 'Errore interno del server', stack: err instanceof Error ? err.stack : undefined });
 }

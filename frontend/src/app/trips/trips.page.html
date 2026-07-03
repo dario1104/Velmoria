@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>I miei viaggi</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="section-top">
+    <h2>Tutti i viaggi</h2>
+    <ion-note>{{ trips.length }} viaggi</ion-note>
+  </div>
+
+  <div *ngIf="trips.length === 0" class="empty-state">
+    <div class="empty-icon">
+      <ion-icon name="map-outline"></ion-icon>
+    </div>
+    <h3>Nessun viaggio</h3>
+    <p>Crea il tuo primo viaggio per iniziare</p>
+    <ion-button routerLink="/trip-form">Crea viaggio</ion-button>
+  </div>
+
+  <div class="trip-list">
+    <div *ngFor="let trip of trips; trackBy: trackById" class="trip-card" routerLink="/trip-detail/{{ trip.id }}">
+      <div class="trip-card-top">
+        <div class="trip-info">
+          <h3>{{ trip.title }}</h3>
+          <p class="trip-date">{{ trip.startDate | date }}</p>
+        </div>
+        <ion-badge [color]="trip.isActive ? 'primary' : 'medium'">
+          {{ trip.isActive ? 'In corso' : 'Concluso' }}
+        </ion-badge>
+      </div>
+      <p class="trip-desc" *ngIf="trip.description">{{ trip.description }}</p>
+      <div class="trip-stats">
+        <span>
+          <ion-icon name="location-outline"></ion-icon>
+          {{ trip._count?.points || 0 }} punti
+        </span>
+        <span>
+          <ion-icon name="pin-outline"></ion-icon>
+          {{ trip._count?.markers || 0 }} marker
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/trip-form">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
